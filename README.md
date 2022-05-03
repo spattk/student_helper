@@ -1,5 +1,24 @@
-# pern-todo-app
+## Student Helper
 
-<img src="https://www.freecodecamp.org/news/content/images/size/w2000/2020/03/PERN.png" />
 
-https://www.youtube.com/watch?v=ldYcgPKEZC8
+### Client
+```
+cd client
+nvm -v (should be 14+)
+npm install
+npm start
+```
+
+### Server
+```
+cd server
+nvm -v (should be 14+)
+npm install
+npm start 5000
+```
+
+### Requirements
+
+### Design
+
+### API
