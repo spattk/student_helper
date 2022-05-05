@@ -9,79 +9,120 @@ app.use(express.json()); //req.body
 
 //ROUTES//
 
-//create a todo
-
-app.post("/todos", async (req, res) => {
-  try {
-    const { description } = req.body;
-    const newTodo = await pool.query(
-      "INSERT INTO todo (description) VALUES($1) RETURNING *",
-      [description]
-    );
-
-    res.json(newTodo.rows[0]);
-  } catch (err) {
-    console.error(err.message);
+app.get("/users", async (req,res) =>{
+  try{
+      const allUsers = await pool.query("select * from users");
+      res.json(allUsers.rows);
+  } catch(err) {
+      console.error(err.message);
   }
 });
 
-//get all todos
-
-app.get("/todos", async (req, res) => {
-  try {
-    const allTodos = await pool.query("SELECT * FROM todo");
-    res.json(allTodos.rows);
-  } catch (err) {
-    console.error(err.message);
+app.get("/projects", async (req,res) =>{
+  try{
+      const allProjects = await pool.query("select * from projects");
+      res.json(allProjects.rows);
+  } catch(err) {
+      console.error(err.message);
   }
 });
 
-//get a todo
+app.get("/projects/:id", async (req,res) =>{
+  try{
+      const {id} = req.params;
+      const project = await pool.query("select * from projects where project_id = $1",[
+          id
+      ]);
 
-app.get("/todos/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const todo = await pool.query("SELECT * FROM todo WHERE todo_id = $1", [
-      id
-    ]);
-
-    res.json(todo.rows[0]);
-  } catch (err) {
-    console.error(err.message);
+      res.json(project.rows[0]);
+  } catch(err) {
+      console.error(err.message);
   }
 });
 
-//update a todo
-
-app.put("/todos/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { description } = req.body;
-    const updateTodo = await pool.query(
-      "UPDATE todo SET description = $1 WHERE todo_id = $2",
-      [description, id]
-    );
-
-    res.json("Todo was updated!");
-  } catch (err) {
-    console.error(err.message);
+app.get("/groups", async (req,res) =>{
+  try{
+      const allGroups = await pool.query("select * from groupprojectmapping");
+      res.json(allGroups.rows);
+  } catch(err) {
+      console.error(err.message);
   }
 });
 
-//delete a todo
+app.get("/groups/:id", async (req,res) =>{
+  try{
+      const {id} = req.params;
+      const group = await pool.query("select * from groupprojectmapping where group_id = $1",[
+          id
+      ]);
 
-app.delete("/todos/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deleteTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1", [
-      id
-    ]);
-    res.json("Todo was deleted!");
-  } catch (err) {
-    console.log(err.message);
+      res.json(group.rows[0]);
+  } catch(err) {
+      console.error(err.message);
   }
 });
 
-app.listen(5000, () => {
-  console.log("server has started on port 5000");
+app.get("/groups/:id/grade", async (req,res) =>{
+  try{
+      const {id} = req.params;
+      const group = await pool.query("select grade from groupprojectmapping where group_id = $1",[
+          id
+      ]);
+
+      res.json(group.rows[0]);
+  } catch(err) {
+      console.error(err.message);
+  }
+});
+
+app.get("/groups/professor/:id", async (req,res) =>{
+  try{
+      const {id} = req.params;
+      const group = await pool.query("select * from groupprojectmapping where project_id in (select project_id from projects where professor_id = $1)",[
+          id
+      ]);
+
+      res.json(group.rows[0]);
+  } catch(err) {
+      console.error(err.message);
+  }
+});
+
+app.get("/stories", async (req,res) =>{
+  try{
+      const allStories = await pool.query("select * from stories");
+      res.json(allStories.rows);
+  } catch(err) {
+      console.error(err.message);
+  }
+});
+
+app.get("/stories/:id", async (req,res) =>{
+  try{
+      const {id} = req.params;
+      const story = await pool.query("select * from stories where story_id = $1",[
+          id
+      ]);
+
+      res.json(story.rows[0]);
+  } catch(err) {
+      console.error(err.message);
+  }
+});
+
+
+app.get("/users/:id/stories", async (req,res) =>{
+  try{
+      const {id} = req.params;
+      const stories = await pool.query("select * from stories where story_id in (select story_id from projectstorymapping where developer_id = $1)",[
+          id
+      ]);
+
+      res.json(stories);
+  } catch(err) {
+      console.error(err.message);
+  }
+});
+app.listen(5001, () => {
+  console.log("server has started on port 5001");
 });
