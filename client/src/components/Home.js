@@ -1,18 +1,14 @@
-import React, { Fragment } from "react";
-import { Container } from "semantic-ui-react";
+import React from "react";
+import { Container, Grid } from "semantic-ui-react";
 import "../App.css";
-import GridExampleDividedNumber from "./GridDivider";
-
+import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
 import RecentProjects from "./RecentProjects";
 import VerticalNavigation from "./VerticalNavigation";
-import { Grid, Image } from "semantic-ui-react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Footer from "./Footer";
 
 function Home() {
   return (
-    <Container>
+    <Container fluid={true}>
       <MenuHeader />
       <Grid>
         <Grid.Row>
@@ -20,7 +16,7 @@ function Home() {
             <VerticalNavigation />
           </Grid.Column>
           <Grid.Column width={12}>
-            <RecentProjects/>
+            <RecentProjects />
           </Grid.Column>
         </Grid.Row>
       </Grid>

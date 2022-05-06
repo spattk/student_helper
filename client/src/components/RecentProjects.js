@@ -21,16 +21,20 @@ const RecentProjects = () => {
   }, []);
 
   return (
-    <div style={{ border: "1px solid red"}}>
+    <div style={{ border: "1px solid red" }}>
       <div style={{ textAlign: "center" }}>
         <b>Recent Projects</b>
       </div>
-      <div style={{margin:'10px'}}>
-      <Item.Group>
-        {recentProjects.map(recentProject=> (
-            <RecentProject key={recentProject.project_id} name={recentProject.project_name} description={recentProject.project_description} />
-        ))}
-      </Item.Group>
+      <div style={{ margin: "10px" }}>
+        <Item.Group>
+          {recentProjects.map((recentProject) => (
+            <RecentProject
+              key={recentProject.project_id}
+              name={recentProject.project_name}
+              description={recentProject.project_description}
+            />
+          ))}
+        </Item.Group>
       </div>
     </div>
   );

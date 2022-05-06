@@ -18,6 +18,15 @@ app.get("/users", async (req,res) =>{
   }
 });
 
+app.get("/users/students", async (req,res) =>{
+  try{
+      const allStudents = await pool.query("select * from users where role='student'");
+      res.json(allStudents.rows);
+  } catch(err) {
+      console.error(err.message);
+  }
+});
+
 app.get("/projects", async (req,res) =>{
   try{
       const allProjects = await pool.query("select * from projects");
