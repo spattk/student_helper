@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Container } from 'semantic-ui-react'
 
 export default class MenuExampleVerticalPointing extends Component {
   state = { activeItem: 'home' }
@@ -10,6 +10,7 @@ export default class MenuExampleVerticalPointing extends Component {
     const { activeItem } = this.state
 
     return (
+      <Container>
       <Menu pointing vertical>
         <Menu.Item
           name='dashboard'
@@ -32,6 +33,7 @@ export default class MenuExampleVerticalPointing extends Component {
           onClick={this.handleItemClick}
         />
       </Menu>
+      </Container>
     )
   }
 }
