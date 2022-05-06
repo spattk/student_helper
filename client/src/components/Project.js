@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from "react";
 import { Image, Item } from 'semantic-ui-react'
 
-const RecentProject = (props) => {
+const Project = (props) => {
   return (
     <Item>
       <Item.Image
@@ -21,4 +21,4 @@ const RecentProject = (props) => {
   );
 };
 
-export default RecentProject;
+export default Project;

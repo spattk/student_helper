@@ -6,7 +6,7 @@ import MenuHeader from "./MenuHeader";
 import RecentProjects from "./RecentProjects";
 import VerticalNavigation from "./VerticalNavigation";
 
-function Dashboard() {
+function Projects() {
   return (
     <Container fluid={true}>
       <MenuHeader />
@@ -26,4 +26,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Projects;

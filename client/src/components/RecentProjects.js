@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
-import RecentProject from "./RecentProject";
+import Project from "./Project";
 import { Image, Item } from "semantic-ui-react";
 
 const RecentProjects = () => {
@@ -28,7 +28,7 @@ const RecentProjects = () => {
       <div style={{ margin: "10px" }}>
         <Item.Group>
           {recentProjects.map((recentProject) => (
-            <RecentProject
+            <Project
               key={recentProject.project_id}
               name={recentProject.project_name}
               description={recentProject.project_description}
