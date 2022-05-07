@@ -16,7 +16,6 @@ export default class MenuHeader extends Component {
             <Menu.Item
               name="student helper"
               active={activeItem === "student helper"}
-              color={"red"}
               onClick={this.handleItemClick}
             />
             <Menu.Item
