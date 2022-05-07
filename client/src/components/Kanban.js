@@ -7,6 +7,22 @@ import RecentProjects from "./RecentProjects";
 import VerticalNavigation from "./VerticalNavigation";
 
 const Kanban = () => {
+  const styles = [
+    {
+      backgroundColor: "#f8ad9d",
+    },
+    {
+      backgroundColor: "#f6bd60",
+    },
+    {
+      backgroundColor: "#2ec4b6",
+    },
+
+    {
+      backgroundColor: "#b08968",
+    },
+  ];
+
   return (
     <Container fluid={true}>
       <MenuHeader />
@@ -20,25 +36,25 @@ const Kanban = () => {
             <Grid>
               <Grid.Row>
                 <Grid.Column width={4}>
-                  <h4 style={{ textAlign: "center" }}>TODO</h4>
-                  <Card.Group>
-                    <Card>
+                  <h4 style={{ textAlign: "center"}}>TODO</h4>
+                  <Card.Group style={{border:'1px dotted grey', borderRadius:'13px'}}>
+                    <Card style={styles[0]}>
                       <Card.Content>
                         <Card.Description>
-                          Matthew is a pianist living in Nashville.
-                          Matthew is a pianist living in Nashville.
-                          Matthew is a pianist living in Nashville.
+                          Matthew is a pianist living in Nashville. Matthew is a
+                          pianist living in Nashville. Matthew is a pianist
+                          living in Nashville.
                         </Card.Description>
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[0]}>
                       <Card.Content>
                         <Card.Description content="Jake is a drummer living in New York." />
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[0]}>
                       <Card.Content>
                         <Card.Description content="Jake is a drummer living in New York." />
                       </Card.Content>
@@ -47,8 +63,8 @@ const Kanban = () => {
                 </Grid.Column>
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>DEV</h4>
-                  <Card.Group>
-                    <Card>
+                  <Card.Group style={{border:'1px dotted grey', borderRadius:'13px'}}>
+                    <Card style={styles[1]}>
                       <Card.Content>
                         <Card.Description>
                           Matthew is a pianist living in Nashville.
@@ -56,7 +72,7 @@ const Kanban = () => {
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[1]}>
                       <Card.Content>
                         <Card.Description content="Jake is a drummer living in New York." />
                       </Card.Content>
@@ -65,54 +81,69 @@ const Kanban = () => {
                 </Grid.Column>
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>QA/REVIEW</h4>
-                  <Card.Group>
-                    <Card>
+                  <Card.Group style={{border:'1px dotted grey', borderRadius:'13px'}}>
+                    <Card style={styles[2]}>
                       <Card.Content>
-                        <Card.Description>
+                        <Card.Description style={{ color: "white" }}>
                           Matthew is a pianist living in Nashville.
                         </Card.Description>
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[2]}>
                       <Card.Content>
-                        <Card.Description content="Jake is a drummer living in New York." />
+                        <Card.Description
+                          content="Jake is a drummer living in New York."
+                          style={{ color: "white" }}
+                        />
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[2]}>
                       <Card.Content>
-                        <Card.Description content="Jake is a drummer living in New York." />
+                        <Card.Description
+                          content="Jake is a drummer living in New York."
+                          style={{ color: "white" }}
+                        />
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[2]}>
                       <Card.Content>
-                        <Card.Description content="Jake is a drummer living in New York." />
+                        <Card.Description
+                          content="Jake is a drummer living in New York."
+                          style={{ color: "white" }}
+                        />
                       </Card.Content>
                     </Card>
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>RELEASED</h4>
-                  <Card.Group>
-                    <Card>
+                  <Card.Group style={{border:'1px dotted grey', borderRadius:'13px'}}>
+                    <Card style={styles[3]}>
                       <Card.Content>
-                        <Card.Description>
+                        <Card.Description style={{ color: "white" }}>
                           Matthew is a pianist living in Nashville.
                         </Card.Description>
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[3]}>
                       <Card.Content>
-                        <Card.Description content="Jake is a drummer living in New York." />
+                        <Card.Description
+                          style={{ color: "white" }}
+                          content="Jake is a drummer living in New York."
+                        />
                       </Card.Content>
                     </Card>
 
-                    <Card>
+                    <Card style={styles[3]}>
                       <Card.Content>
-                        <Card.Description content="Jake is a drummer living in New York." />
+                        <Card.Description
+                          style={{ color: "white" }}
+                          content="Jake is a drummer living in New York."
+                        />
                       </Card.Content>
                     </Card>
                   </Card.Group>
