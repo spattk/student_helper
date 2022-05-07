@@ -14,7 +14,7 @@ npm start
 cd server
 nvm -v (should be 14+)
 npm install
-npm start 5000
+nodemon index
 ```
 
 ### Requirements
