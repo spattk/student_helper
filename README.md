@@ -21,4 +21,11 @@ nodemon index
 
 ### Design
 
+#### Story Status String
+TODO <br>
+IN_PROGRESS <br>
+IN_REVIEW <br>
+COMPLETED <br>
+
+
 ### API
