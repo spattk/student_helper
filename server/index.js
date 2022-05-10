@@ -132,6 +132,68 @@ app.get("/users/:id/stories", async (req,res) =>{
       console.error(err.message);
   }
 });
+
+app.post("/users",async(req,res) => {
+    try{
+        const {user_id,username,password,email,first_name,last_name,phone,role,auth_token,department}  = await req.body;
+
+        const newStory = await pool.query(
+            "INSERT INTO users (user_id,username,password,email,first_name,last_name,phone,role,auth_token,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *", 
+            [user_id,username,password,email,first_name,last_name,phone,role,auth_token,department]
+        );
+
+        res.json(newStory.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.post("/groupprojectmapping",async(req,res) => {
+    try{
+        const {group_id,project_id,grade}  = await req.body;
+
+        const newStory = await pool.query(
+            "INSERT INTO groupprojectmapping (group_id,project_id,grade) VALUES($1,$2,$3) RETURNING *", 
+            [group_id,project_id,grade]
+        );
+
+        res.json(newStory.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.post("/studentgroupmapping",async(req,res) => {
+    try{
+        const {user_id,group_id,is_user_owner,is_active_group}  = await req.body;
+
+        const newStory = await pool.query(
+            "INSERT INTO studentgroupmapping (user_id,group_id,is_user_owner,is_active_group) VALUES($1,$2,$3,$4) RETURNING *", 
+            [user_id,group_id,is_user_owner,is_active_group]
+        );
+
+        res.json(newStory.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.post("/projectstorymapping",async(req,res) => {
+    try{
+        const {project_id,story_id,developer_id}  = await req.body;
+
+        const newStory = await pool.query(
+            "INSERT INTO projectstorymapping (project_id,story_id,developer_id) VALUES($1,$2,$3) RETURNING *", 
+            [project_id,story_id,developer_id]
+        );
+
+        res.json(newStory.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
 app.listen(5001, () => {
   console.log("server has started on port 5001");
 });
+
