@@ -133,6 +133,30 @@ app.get("/users/:id/stories", async (req,res) =>{
   }
 });
 
+app.post("/projects",async(req,res) => {
+    try{
+        const project_id  = req.body.project_id;
+        const project_name  = await req.body.project_name;
+        const project_description  = await req.body.project_description;
+        const github_url  = await req.body.github_url;
+        const video_url  = await req.body.video_url;
+        const funding_url  = await req.body.funding_url;
+        const project_status  = await req.body.project_status;
+        const domain  = await req.body.domain;
+        const professor_id  = await req.body.professor_id;
+
+        console.log(project_id);
+        const newProject = await pool.query(
+            "INSERT INTO projects (project_id,project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *", 
+            [project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id]
+        );
+
+        res.json(newProject.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
 app.post("/users",async(req,res) => {
     try{
         const {user_id,username,password,email,first_name,last_name,phone,role,auth_token,department}  = await req.body;
@@ -193,7 +217,36 @@ app.post("/projectstorymapping",async(req,res) => {
     }
 })
 
-app.listen(5001, () => {
-  console.log("server has started on port 5001");
+app.post("/stories",async(req,res) => {
+    try{
+        const {story_id,story_name,story_description,story_points,status}  = await req.body;
+
+        const newStory = await pool.query(
+            "INSERT INTO stories (story_id,story_name,story_description,story_points,status) VALUES($1,$2,$3,$4,$5) RETURNING *", 
+            [story_id,story_name,story_description,story_points,status]
+        );
+
+        res.json(newStory.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.put("/stories/:id", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const {story_name,story_description,story_points,status}  = await req.body;
+        const updateStory = await pool.query("UPDATE stories SET story_name = $1, story_description = $2, story_points = $3, status = $4 WHERE story_id = $5",
+        [story_name,story_description,story_points,status,id]
+        ); 
+
+        res.json("Story was updated"); 
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.listen(5000, () => {
+  console.log("server has started on port 5000");
 });
 
