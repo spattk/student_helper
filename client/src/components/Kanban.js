@@ -31,7 +31,16 @@ const Kanban = (props) => {
             <VerticalNavigation />
           </Grid.Column>
           <Grid.Column width={12}>
-            <h1>Project Name</h1>
+            <h2
+              style={{
+                marginTop: "10px",
+                textAlign: "center",
+                border: "1px dashed black",
+                padding: "10px",
+              }}
+            >
+              Student Helper Kanban Board
+            </h2>
             <Grid>
               <Grid.Row>
                 <Grid.Column width={4}>
@@ -40,19 +49,28 @@ const Kanban = (props) => {
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
                     <StoryCard
-                      content="Matthew is a pianist living in Nashville. Matthew is a
-                          pianist living in Nashville. Matthew is a pianist
-                          living in Nashville."
+                      content="Add auto-generated IDs to DB in the insert APIs"
                       card_style={styles[0]}
                     />
 
                     <StoryCard
-                      content="Jake is a drummer living in New York."
+                      content="Kanban board story create API"
                       card_style={styles[0]}
                     />
 
                     <StoryCard
-                      content="Jake is a drummer living in New York."
+                      content="/project/:p_id/stories API"
+                      card_style={styles[0]}
+                    />
+
+
+                    <StoryCard
+                      content="Swagger Documentation API integration"
+                      card_style={styles[0]}
+                    />
+
+                    <StoryCard
+                      content="Github latest commit fetch API"
                       card_style={styles[0]}
                     />
                   </Card.Group>
@@ -63,12 +81,17 @@ const Kanban = (props) => {
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
                     <StoryCard
-                      content="Matthew is a pianist living in Nashville."
+                      content="Integration of project ID with the Kanban Board"
                       card_style={styles[1]}
                     />
 
                     <StoryCard
-                      content="Jake is a drummer living in New York."
+                      content="Login and Authentication flow with setting up of session"
+                      card_style={styles[1]}
+                    />
+
+                    <StoryCard
+                      content="Hyperlink and control flow within the text."
                       card_style={styles[1]}
                     />
                   </Card.Group>
@@ -79,19 +102,19 @@ const Kanban = (props) => {
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
                     <StoryCard
-                      content="Matthew is a pianist living in Nashville."
+                      content="Kanban board UI including Dev, StoryID, Story Points"
                       card_style={styles[2]}
                       text_style={{ color: "white" }}
                     />
 
                     <StoryCard
-                      content="Jake is a drummer living in New York."
+                      content="Create stories API"
                       card_style={styles[2]}
                       text_style={{ color: "white" }}
                     />
 
                     <StoryCard
-                      content="Jake is a drummer living in New York."
+                      content="Update story status API (TODO -> DEV)"
                       card_style={styles[2]}
                       text_style={{ color: "white" }}
                     />
@@ -103,19 +126,19 @@ const Kanban = (props) => {
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
                     <StoryCard
-                      content="Matthew is a pianist living in Nashville."
+                      content="Client Side Routing"
                       card_style={styles[3]}
                       text_style={{ color: "white" }}
                     />
 
                     <StoryCard
-                      content="Matthew is a pianist living in Nashville."
+                      content="Kanban board base UI"
                       card_style={styles[3]}
                       text_style={{ color: "white" }}
                     />
 
                     <StoryCard
-                      content="Matthew is a pianist living in Nashville."
+                      content="GET APIs with Postman v2.1 Collections"
                       card_style={styles[3]}
                       text_style={{ color: "white" }}
                     />

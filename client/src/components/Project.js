@@ -1,22 +1,22 @@
 import React, { Component, useEffect } from "react";
-import { Image, Item } from 'semantic-ui-react'
+import { Image, Item, Button } from "semantic-ui-react";
 
 const Project = (props) => {
   return (
-    <Item>
+    <Item style={{ border: "1px dashed black", padding: "10px" }}>
       <Item.Image
         size="tiny"
         src="https://react.semantic-ui.com/images/wireframe/image.png"
       />
+      
 
       <Item.Content>
         <Item.Header as="a">{props.name}</Item.Header>
         <Item.Meta>Project Metadata</Item.Meta>
-        <Item.Description>
-          {props.description}
-        </Item.Description>
-        <Item.Extra>Additional Details</Item.Extra>
+        <Item.Description>{props.description}</Item.Description>
+        <Item.Extra><Button primary>Kanban Board</Button></Item.Extra>
       </Item.Content>
+      
     </Item>
   );
 };
