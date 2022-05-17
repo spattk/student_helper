@@ -13,7 +13,7 @@ function App() {
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="students" element={<Students />} />
       <Route path="projects" element={<Projects />} />
-      <Route path="kanban" element={<Kanban />} />
+      <Route path="kanban/:id" element={<Kanban />} />
     </Routes>
   );
 }
