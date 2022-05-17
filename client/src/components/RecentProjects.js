@@ -10,7 +10,6 @@ const RecentProjects = () => {
       const response = await fetch("http://localhost:5001/projects");
       const jsonData = await response.json();
       setRecentProjects(jsonData);
-      console.log(jsonData);
     } catch (err) {
       console.log(err);
     }

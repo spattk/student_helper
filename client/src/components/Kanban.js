@@ -46,7 +46,6 @@ const Kanban = (props) => {
       setProjectStories(storyJsonData);
       let temp = [];
       setProjectStories((state) => {
-        // console.log(state);
         temp = state.filter((story) => story.status === "TODO");
         setTodoStories(temp);
 
@@ -101,6 +100,9 @@ const Kanban = (props) => {
                         key={index}
                         content={story.story_description}
                         card_style={styles[0]}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
                       />
                     ))}
                     {/* <StoryCard
@@ -139,6 +141,9 @@ const Kanban = (props) => {
                         key={index}
                         content={story.story_description}
                         card_style={styles[1]}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
                       />
                     ))}
 
@@ -169,6 +174,9 @@ const Kanban = (props) => {
                         content={story.story_description}
                         card_style={styles[2]}
                         text_style={{ color: "white" }}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
                       />
                     ))}
 
@@ -202,6 +210,9 @@ const Kanban = (props) => {
                         content={story.story_description}
                         card_style={styles[3]}
                         text_style={{ color: "white" }}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
                       />
                     ))}
 

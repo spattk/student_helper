@@ -11,7 +11,7 @@ const StoryCard = (props) => {
       <Card.Content extra>
         <a style={props.text_style}>
           <Icon name="user" />
-          Developer
+          {props.developer_name}
         </a>
         <a
           style={
@@ -26,7 +26,7 @@ const StoryCard = (props) => {
             })
           }
         >
-          TS-123
+          TS-{props.story_id}
         </a>
 
         <a
@@ -42,7 +42,7 @@ const StoryCard = (props) => {
             })
           }
         >
-          <Icon name="clock outline" />2
+          <Icon name="clock outline" />{props.story_points}
         </a>
       </Card.Content>
     </Card>
