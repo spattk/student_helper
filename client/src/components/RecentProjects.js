@@ -32,6 +32,7 @@ const RecentProjects = () => {
               key={recentProject.project_id}
               name={recentProject.project_name}
               description={recentProject.project_description}
+              project_id={recentProject.project_id}
             />
           ))}
         </Item.Group>
