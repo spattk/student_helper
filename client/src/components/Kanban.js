@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Container, Grid } from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
 import StoryCard from "./StoryCard";
 import VerticalNavigation from "./VerticalNavigation";
+import { useParams } from "react-router-dom";
 
 const Kanban = (props) => {
   const styles = [
@@ -21,6 +22,52 @@ const Kanban = (props) => {
       backgroundColor: "#0077b6",
     },
   ];
+
+  let { id } = useParams();
+  const [project, setProject] = useState([]);
+  const [projectStories, setProjectStories] = useState([]);
+  // const [todoStories, setTodoStories] = useState([]);
+  // const [devStories, setDevStories] = useState([]);
+  // const [reviewStories, setReviewStories] = useState([]);
+  // const [releasedStories, setReleasedStories] = useState([]);
+
+  const getProjectDetails = async () => {
+    try {
+      const projectResponse = await fetch(
+        `http://localhost:5001/projects/${id}`
+      );
+      const projectJsonData = await projectResponse.json();
+      setProject(projectJsonData);
+
+      const projectStoriesResponse = await fetch(
+        `http://localhost:5001/projects/${id}/stories`
+      );
+      const storyJsonData = await projectStoriesResponse.json();
+      setProjectStories(storyJsonData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getProjectDetails();
+  }, [id]);
+
+  // console.log(project);
+  // console.log(projectStories);
+  var kanbanBoardArray = [[]];
+  kanbanBoardArray[0] = projectStories.filter(
+    (projectStory) => projectStory.status == "TODO"
+  );
+  kanbanBoardArray[1] = projectStories.filter(
+    (projectStory) => projectStory.status == "IN_PROGRESS"
+  );
+  kanbanBoardArray[2] = projectStories.filter(
+    (projectStory) => projectStory.status == "IN_REVIEW"
+  );
+  kanbanBoardArray[3] = projectStories.filter(
+    (projectStory) => projectStory.status == "COMPLETED"
+  );
 
   return (
     <Container fluid={true}>
@@ -39,7 +86,7 @@ const Kanban = (props) => {
                 padding: "10px",
               }}
             >
-              Student Helper Kanban Board
+              {project.project_name} Kanban Board
             </h2>
             <Grid>
               <Grid.Row>
@@ -48,12 +95,19 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {kanbanBoardArray[0].map((story, index) => (
+                      <StoryCard
+                        key={index}
+                        content={story.story_description}
+                        card_style={styles[0]}
+                      />
+                    ))}
+                    {/* <StoryCard
                       content="Add auto-generated IDs to DB in the insert APIs"
                       card_style={styles[0]}
-                    />
+                    /> */}
 
-                    <StoryCard
+                    {/* <StoryCard
                       content="Kanban board story create API"
                       card_style={styles[0]}
                     />
@@ -63,7 +117,6 @@ const Kanban = (props) => {
                       card_style={styles[0]}
                     />
 
-
                     <StoryCard
                       content="Swagger Documentation API integration"
                       card_style={styles[0]}
@@ -72,7 +125,7 @@ const Kanban = (props) => {
                     <StoryCard
                       content="Github latest commit fetch API"
                       card_style={styles[0]}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
@@ -80,7 +133,15 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {kanbanBoardArray[1].map((story, index) => (
+                      <StoryCard
+                        key={index}
+                        content={story.story_description}
+                        card_style={styles[1]}
+                      />
+                    ))}
+
+                    {/* <StoryCard
                       content="Integration of project ID with the Kanban Board"
                       card_style={styles[1]}
                     />
@@ -93,7 +154,7 @@ const Kanban = (props) => {
                     <StoryCard
                       content="Hyperlink and control flow within the text."
                       card_style={styles[1]}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
@@ -101,7 +162,16 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {kanbanBoardArray[2].map((story, index) => (
+                      <StoryCard
+                        key={index}
+                        content={story.story_description}
+                        card_style={styles[2]}
+                        text_style={{ color: "white" }}
+                      />
+                    ))}
+
+                    {/* <StoryCard
                       content="Kanban board UI including Dev, StoryID, Story Points"
                       card_style={styles[2]}
                       text_style={{ color: "white" }}
@@ -117,7 +187,7 @@ const Kanban = (props) => {
                       content="Update story status API (TODO -> DEV)"
                       card_style={styles[2]}
                       text_style={{ color: "white" }}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
@@ -125,7 +195,16 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {kanbanBoardArray[3].map((story, index) => (
+                      <StoryCard
+                        key={index}
+                        content={story.story_description}
+                        card_style={styles[3]}
+                        text_style={{ color: "white" }}
+                      />
+                    ))}
+
+                    {/* <StoryCard
                       content="Client Side Routing"
                       card_style={styles[3]}
                       text_style={{ color: "white" }}
@@ -141,7 +220,7 @@ const Kanban = (props) => {
                       content="GET APIs with Postman v2.1 Collections"
                       card_style={styles[3]}
                       text_style={{ color: "white" }}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
               </Grid.Row>
