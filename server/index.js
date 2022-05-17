@@ -148,11 +148,11 @@ app.get("/projects/:id/stories", async (req,res) =>{
 
 app.post("/projects",async(req,res) => {
     try{
-        const {project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id} = await req.body;  
+        const {project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id} = await req.body;  
 
         const newProject = await pool.query(
-            "INSERT INTO projects (project_id,project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *", 
-            [project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id]
+            "INSERT INTO projects (project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$86) RETURNING *", 
+            [project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id]
         );
 
         res.json(newProject.rows[0]);
@@ -163,12 +163,32 @@ app.post("/projects",async(req,res) => {
 
 app.post("/users",async(req,res) => {
     try{
-        const {user_id,username,password,email,first_name,last_name,phone,role,auth_token,department}  = await req.body;
+        const {username,password,email,first_name,last_name,phone,role,auth_token,department}  = await req.body;
+
+        const newUser = await pool.query(
+            "INSERT INTO users (username,password,email,first_name,last_name,phone,role,auth_token,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *", 
+            [username,password,email,first_name,last_name,phone,role,auth_token,department]
+        );
+
+        res.json(newUser.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.post("/stories",async(req,res) => {
+    try{
+        const {story_name,story_description,story_points,status,project_id,developer_id}  = await req.body;
 
         const newStory = await pool.query(
-            "INSERT INTO users (user_id,username,password,email,first_name,last_name,phone,role,auth_token,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *", 
-            [user_id,username,password,email,first_name,last_name,phone,role,auth_token,department]
+            "INSERT INTO stories (story_name,story_description,story_points,status) VALUES($1,$2,$3,$4) RETURNING *", 
+            [story_name,story_description,story_points,status]
         );
+
+        const newProjectStoryMapping = await pool.query(
+            "INSERT INTO projectstorymapping (project_id, story_id, developer_id) VALUES($1,$2,$3) RETURNING *",
+            [project_id,newStory.rows[0].story_id,developer_id]
+        )
 
         res.json(newStory.rows[0]);
     } catch(err) {
@@ -213,21 +233,6 @@ app.post("/projectstorymapping",async(req,res) => {
         const newStory = await pool.query(
             "INSERT INTO projectstorymapping (project_id,story_id,developer_id) VALUES($1,$2,$3) RETURNING *", 
             [project_id,story_id,developer_id]
-        );
-
-        res.json(newStory.rows[0]);
-    } catch(err) {
-        console.error(err.message);
-    }
-})
-
-app.post("/stories",async(req,res) => {
-    try{
-        const {story_id,story_name,story_description,story_points,status}  = await req.body;
-
-        const newStory = await pool.query(
-            "INSERT INTO stories (story_id,story_name,story_description,story_points,status) VALUES($1,$2,$3,$4,$5) RETURNING *", 
-            [story_id,story_name,story_description,story_points,status]
         );
 
         res.json(newStory.rows[0]);
