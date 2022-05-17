@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Card, Container, Grid } from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
 import StoryCard from "./StoryCard";
 import VerticalNavigation from "./VerticalNavigation";
-import { useParams } from "react-router-dom";
 
 const Kanban = (props) => {
   const styles = [
@@ -26,10 +26,10 @@ const Kanban = (props) => {
   let { id } = useParams();
   const [project, setProject] = useState([]);
   const [projectStories, setProjectStories] = useState([]);
-  // const [todoStories, setTodoStories] = useState([]);
-  // const [devStories, setDevStories] = useState([]);
-  // const [reviewStories, setReviewStories] = useState([]);
-  // const [releasedStories, setReleasedStories] = useState([]);
+  const [todoStories, setTodoStories] = useState([]);
+  const [devStories, setDevStories] = useState([]);
+  const [reviewStories, setReviewStories] = useState([]);
+  const [releasedStories, setReleasedStories] = useState([]);
 
   const getProjectDetails = async () => {
     try {
@@ -44,6 +44,23 @@ const Kanban = (props) => {
       );
       const storyJsonData = await projectStoriesResponse.json();
       setProjectStories(storyJsonData);
+      let temp = [];
+      setProjectStories((state) => {
+        // console.log(state);
+        temp = state.filter((story) => story.status === "TODO");
+        setTodoStories(temp);
+
+        temp = state.filter((story) => story.status === "IN_PROGRESS");
+        setDevStories(temp);
+
+        temp = state.filter((story) => story.status === "IN_REVIEW");
+        setReviewStories(temp);
+
+        temp = state.filter((story) => story.status === "COMPLETED");
+        setReleasedStories(temp);
+
+        return state;
+      });
     } catch (err) {
       console.log(err);
     }
@@ -52,22 +69,6 @@ const Kanban = (props) => {
   useEffect(() => {
     getProjectDetails();
   }, [id]);
-
-  // console.log(project);
-  // console.log(projectStories);
-  var kanbanBoardArray = [[]];
-  kanbanBoardArray[0] = projectStories.filter(
-    (projectStory) => projectStory.status == "TODO"
-  );
-  kanbanBoardArray[1] = projectStories.filter(
-    (projectStory) => projectStory.status == "IN_PROGRESS"
-  );
-  kanbanBoardArray[2] = projectStories.filter(
-    (projectStory) => projectStory.status == "IN_REVIEW"
-  );
-  kanbanBoardArray[3] = projectStories.filter(
-    (projectStory) => projectStory.status == "COMPLETED"
-  );
 
   return (
     <Container fluid={true}>
@@ -95,7 +96,7 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    {kanbanBoardArray[0].map((story, index) => (
+                    {todoStories.map((story, index) => (
                       <StoryCard
                         key={index}
                         content={story.story_description}
@@ -133,7 +134,7 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    {kanbanBoardArray[1].map((story, index) => (
+                    {devStories.map((story, index) => (
                       <StoryCard
                         key={index}
                         content={story.story_description}
@@ -162,7 +163,7 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    {kanbanBoardArray[2].map((story, index) => (
+                    {reviewStories.map((story, index) => (
                       <StoryCard
                         key={index}
                         content={story.story_description}
@@ -195,7 +196,7 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    {kanbanBoardArray[3].map((story, index) => (
+                    {releasedStories.map((story, index) => (
                       <StoryCard
                         key={index}
                         content={story.story_description}

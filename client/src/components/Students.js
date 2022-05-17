@@ -1,6 +1,5 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { Container, Grid, Card, CardGroup } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Card, Container, Grid } from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
@@ -38,15 +37,15 @@ const Students = () => {
               <div style={{ textAlign: "center" }}>
                 <b>Registered Students</b>
               </div>
-              <div style={{margin:'10px'}}>
-              <Card.Group>
-                {allStudents.map((student) => (
-                  <Student
-                    name={student.first_name + " " + student.last_name}
-                    designation="Student"
-                  />
-                ))}
-              </Card.Group>
+              <div style={{ margin: "10px" }}>
+                <Card.Group>
+                  {allStudents.map((student) => (
+                    <Student
+                      name={student.first_name + " " + student.last_name}
+                      designation="Student"
+                    />
+                  ))}
+                </Card.Group>
               </div>
             </div>
           </Grid.Column>

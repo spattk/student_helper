@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Item } from "semantic-ui-react";
 import Project from "./Project";
-import { Image, Item } from "semantic-ui-react";
 
 const RecentProjects = () => {
   const [recentProjects, setRecentProjects] = useState([]);
