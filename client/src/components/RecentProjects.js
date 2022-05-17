@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Item } from "semantic-ui-react";
 import Project from "./Project";
-import { Image, Item } from "semantic-ui-react";
 
 const RecentProjects = () => {
   const [recentProjects, setRecentProjects] = useState([]);
@@ -10,7 +10,6 @@ const RecentProjects = () => {
       const response = await fetch("http://localhost:5001/projects");
       const jsonData = await response.json();
       setRecentProjects(jsonData);
-      console.log(jsonData);
     } catch (err) {
       console.log(err);
     }
