@@ -136,7 +136,7 @@ app.get("/users/:id/stories", async (req,res) =>{
 app.get("/projects/:id/stories", async (req,res) =>{
     try{
         const {id} = req.params;
-        const stories = await pool.query("select * from stories where story_id in (select story_id from projectstorymapping where project_id = $1)",[
+        const stories = await pool.query("select stories.story_id,story_name,story_description,story_points,status,username AS developer from stories join projectstorymapping on stories.story_id = projectstorymapping.story_id join users on users.user_id = projectstorymapping.developer_id where project_id = $1",[
             id
         ]);
   
@@ -249,7 +249,7 @@ app.put("/stories/:id", async (req,res) => {
         [story_name,story_description,story_points,status,id]
         ); 
 
-        res.json("Story was updated"); 
+        res.json(updateStory.rows); 
     } catch(err) {
         console.error(err.message);
     }
@@ -260,11 +260,11 @@ app.put("/projects/:id", async (req,res) => {
     try{
         const {id} = req.params;
         const {project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id}  = await req.body;
-        const updateStory = await pool.query("UPDATE projects SET project_name = $1, project_description = $2, github_url = $3, video_url = $4, funding_url = $5, status = $6, domain = $7, professor_id = $8 WHERE project_id = $9",
+        const updateProject = await pool.query("UPDATE projects SET project_name = $1, project_description = $2, github_url = $3, video_url = $4, funding_url = $5, status = $6, domain = $7, professor_id = $8 WHERE project_id = $9",
         [project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id,id]
         ); 
 
-        res.json("Project was updated"); 
+        res.json(updateProject.rows); 
     } catch(err) {
         console.error(err.message);
     }
