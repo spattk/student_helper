@@ -13,26 +13,37 @@ const StoryCard = (props) => {
   const Add = addrtype.map((Add) => Add);
   const handleAddrTypeChange = (e) => {
     let storyId = e.target.parentElement.id;
+
+    let storyJsonData;
+
     let updatedStoryStatus = addrtype[e.target.value];
     console.log(addrtype[e.target.value] + " " + storyId);
     console.log(updatedStoryStatus);
-    const requestOptions = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        story_name: "Create Story API",
-        story_description: "Kanban board story create API",
-        story_points: "2",
-        status: updatedStoryStatus,
-      }),
-    };
-    fetch(`http://localhost:5001/stories/${storyId}`, requestOptions).then(
-      (response) =>
-        response.json().then((result) => {
-          console.log(result);
-          props.update_story_handler();
-        })
-    );
+    console.log(storyJsonData);
+
+    fetch(`http://localhost:5001/stories/${storyId}`).then((response) =>
+      response.json().then((result) => {
+        storyJsonData = result;
+        const requestOptions = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            story_name: storyJsonData.story_name,
+            story_description: storyJsonData.story_description,
+            story_points: storyJsonData.story_points,
+            status: updatedStoryStatus,
+          }),
+        };
+        fetch(`http://localhost:5001/stories/${storyId}`, requestOptions).then(
+          (response) =>
+            response.json().then((result) => {
+              console.log(result);
+              props.update_story_handler();
+            })
+        );
+      })
+    );    
+    
   };
 
   return (
