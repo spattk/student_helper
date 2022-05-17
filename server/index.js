@@ -127,25 +127,29 @@ app.get("/users/:id/stories", async (req,res) =>{
           id
       ]);
 
-      res.json(stories);
+      res.json(stories.rows);
   } catch(err) {
       console.error(err.message);
   }
 });
 
+app.get("/projects/:id/stories", async (req,res) =>{
+    try{
+        const {id} = req.params;
+        const stories = await pool.query("select * from stories where story_id in (select story_id from projectstorymapping where project_id = $1)",[
+            id
+        ]);
+  
+        res.json(stories.rows);
+    } catch(err) {
+        console.error(err.message);
+    }
+  });
+
 app.post("/projects",async(req,res) => {
     try{
-        const project_id  = req.body.project_id;
-        const project_name  = await req.body.project_name;
-        const project_description  = await req.body.project_description;
-        const github_url  = await req.body.github_url;
-        const video_url  = await req.body.video_url;
-        const funding_url  = await req.body.funding_url;
-        const project_status  = await req.body.project_status;
-        const domain  = await req.body.domain;
-        const professor_id  = await req.body.professor_id;
+        const {project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id} = await req.body;  
 
-        console.log(project_id);
         const newProject = await pool.query(
             "INSERT INTO projects (project_id,project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *", 
             [project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id]
@@ -241,6 +245,21 @@ app.put("/stories/:id", async (req,res) => {
         ); 
 
         res.json("Story was updated"); 
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+
+app.put("/projects/:id", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const {project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id}  = await req.body;
+        const updateStory = await pool.query("UPDATE projects SET project_name = $1, project_description = $2, github_url = $3, video_url = $4, funding_url = $5, status = $6, domain = $7, professor_id = $8 WHERE project_id = $9",
+        [project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id,id]
+        ); 
+
+        res.json("Project was updated"); 
     } catch(err) {
         console.error(err.message);
     }
