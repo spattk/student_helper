@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Card, Container, Grid } from "semantic-ui-react";
+import { Button, Card, Container, Grid } from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
@@ -69,6 +69,35 @@ const Kanban = (props) => {
     getProjectDetails();
   }, [id]);
 
+  const testMeClickHandler = () => {
+    console.log("hey there");
+    let newArray = projectStories;
+    for(var i=0;i<newArray.length;i++){
+      if(newArray[i].status === "TODO"){
+        newArray[i].status = "IN_PROGRESS";
+      }
+    }
+    console.log(newArray);
+    setProjectStories(newArray);
+
+    let temp = [];
+    setProjectStories((state) => {
+      temp = state.filter((story) => story.status === "TODO");
+      setTodoStories(temp);
+
+      temp = state.filter((story) => story.status === "IN_PROGRESS");
+      setDevStories(temp);
+
+      temp = state.filter((story) => story.status === "IN_REVIEW");
+      setReviewStories(temp);
+
+      temp = state.filter((story) => story.status === "COMPLETED");
+      setReleasedStories(temp);
+
+      return state;
+    });
+  } 
+
   return (
     <Container fluid={true}>
       <MenuHeader />
@@ -97,12 +126,13 @@ const Kanban = (props) => {
                   >
                     {todoStories.map((story, index) => (
                       <StoryCard
-                        key={index}
+                        key={story.story_id}
                         content={story.story_description}
                         card_style={styles[0]}
                         developer_name = {story.developer_id}
                         story_points = {story.story_points}
                         story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
                       />
                     ))}
                     {/* <StoryCard
@@ -132,18 +162,19 @@ const Kanban = (props) => {
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <h4 style={{ textAlign: "center" }}>DEV</h4>
+                  <h4 style={{ textAlign: "center" }}>IN_PROGRESS</h4>
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
                     {devStories.map((story, index) => (
                       <StoryCard
-                        key={index}
+                        key={story.story_id}
                         content={story.story_description}
                         card_style={styles[1]}
                         developer_name = {story.developer_id}
                         story_points = {story.story_points}
                         story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
                       />
                     ))}
 
@@ -164,19 +195,20 @@ const Kanban = (props) => {
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <h4 style={{ textAlign: "center" }}>QA/REVIEW</h4>
+                  <h4 style={{ textAlign: "center" }}>IN_REVIEW</h4>
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
                     {reviewStories.map((story, index) => (
                       <StoryCard
-                        key={index}
+                        key={story.story_id}
                         content={story.story_description}
                         card_style={styles[2]}
                         text_style={{ color: "white" }}
                         developer_name = {story.developer_id}
                         story_points = {story.story_points}
                         story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
                       />
                     ))}
 
@@ -200,19 +232,20 @@ const Kanban = (props) => {
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <h4 style={{ textAlign: "center" }}>RELEASED</h4>
+                  <h4 style={{ textAlign: "center" }}>COMPLETED</h4>
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
                     {releasedStories.map((story, index) => (
                       <StoryCard
-                        key={index}
+                        key={story.story_id}
                         content={story.story_description}
                         card_style={styles[3]}
                         text_style={{ color: "white" }}
                         developer_name = {story.developer_id}
                         story_points = {story.story_points}
                         story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
                       />
                     ))}
 
