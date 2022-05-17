@@ -133,6 +133,19 @@ app.get("/users/:id/stories", async (req,res) =>{
   }
 });
 
+app.get("/projects/:id/stories", async (req,res) =>{
+    try{
+        const {id} = req.params;
+        const stories = await pool.query("select * from stories where story_id in (select story_id from projectstorymapping where project_id = $1)",[
+            id
+        ]);
+  
+        res.json(stories.rows);
+    } catch(err) {
+        console.error(err.message);
+    }
+  });
+
 app.post("/projects",async(req,res) => {
     try{
         const {project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id} = await req.body;  
