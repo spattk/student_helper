@@ -91,7 +91,7 @@ app.get("/groups/professor/:id", async (req,res) =>{
           id
       ]);
 
-      res.json(group.rows[0]);
+      res.json(group.rows);
   } catch(err) {
       console.error(err.message);
   }
@@ -198,11 +198,11 @@ app.post("/stories",async(req,res) => {
 
 app.post("/groupprojectmapping",async(req,res) => {
     try{
-        const {group_id,project_id,grade}  = await req.body;
+        const {project_id,grade}  = await req.body;
 
         const newStory = await pool.query(
-            "INSERT INTO groupprojectmapping (group_id,project_id,grade) VALUES($1,$2,$3) RETURNING *", 
-            [group_id,project_id,grade]
+            "INSERT INTO groupprojectmapping (project_id,grade) VALUES($1,$2) RETURNING *", 
+            [project_id,grade]
         );
 
         res.json(newStory.rows[0]);
