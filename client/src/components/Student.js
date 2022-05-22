@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React from "react";
 import { Card } from "semantic-ui-react";
 
 const Student = (props) => {
@@ -7,9 +7,7 @@ const Student = (props) => {
       <Card.Content>
         <Card.Header>{props.name}</Card.Header>
         <Card.Meta>{props.designation}</Card.Meta>
-        <Card.Description>
-          {props.description}
-        </Card.Description>
+        <Card.Description>{props.description}</Card.Description>
       </Card.Content>
     </Card>
   );

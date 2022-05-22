@@ -1,5 +1,6 @@
-import React from "react";
-import { Card, Container, Grid } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Button, Card, Container, Grid } from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
@@ -22,6 +23,81 @@ const Kanban = (props) => {
     },
   ];
 
+  let { id } = useParams();
+  const [project, setProject] = useState([]);
+  const [projectStories, setProjectStories] = useState([]);
+  const [todoStories, setTodoStories] = useState([]);
+  const [devStories, setDevStories] = useState([]);
+  const [reviewStories, setReviewStories] = useState([]);
+  const [releasedStories, setReleasedStories] = useState([]);
+
+  const getProjectDetails = async () => {
+    try {
+      const projectResponse = await fetch(
+        `http://localhost:5001/projects/${id}`
+      );
+      const projectJsonData = await projectResponse.json();
+      setProject(projectJsonData);
+
+      const projectStoriesResponse = await fetch(
+        `http://localhost:5001/projects/${id}/stories`
+      );
+      const storyJsonData = await projectStoriesResponse.json();
+      setProjectStories(storyJsonData);
+      let temp = [];
+      setProjectStories((state) => {
+        temp = state.filter((story) => story.status === "TODO");
+        setTodoStories(temp);
+
+        temp = state.filter((story) => story.status === "IN_PROGRESS");
+        setDevStories(temp);
+
+        temp = state.filter((story) => story.status === "IN_REVIEW");
+        setReviewStories(temp);
+
+        temp = state.filter((story) => story.status === "COMPLETED");
+        setReleasedStories(temp);
+
+        return state;
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getProjectDetails();
+  }, [id]);
+
+  const testMeClickHandler = () => {
+    console.log("hey there");
+    let newArray = projectStories;
+    for(var i=0;i<newArray.length;i++){
+      if(newArray[i].status === "TODO"){
+        newArray[i].status = "IN_PROGRESS";
+      }
+    }
+    console.log(newArray);
+    setProjectStories(newArray);
+
+    let temp = [];
+    setProjectStories((state) => {
+      temp = state.filter((story) => story.status === "TODO");
+      setTodoStories(temp);
+
+      temp = state.filter((story) => story.status === "IN_PROGRESS");
+      setDevStories(temp);
+
+      temp = state.filter((story) => story.status === "IN_REVIEW");
+      setReviewStories(temp);
+
+      temp = state.filter((story) => story.status === "COMPLETED");
+      setReleasedStories(temp);
+
+      return state;
+    });
+  } 
+
   return (
     <Container fluid={true}>
       <MenuHeader />
@@ -39,7 +115,7 @@ const Kanban = (props) => {
                 padding: "10px",
               }}
             >
-              Student Helper Kanban Board
+              {project.project_name} Kanban Board
             </h2>
             <Grid>
               <Grid.Row>
@@ -48,12 +124,23 @@ const Kanban = (props) => {
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {todoStories.map((story, index) => (
+                      <StoryCard
+                        key={story.story_id}
+                        content={story.story_description}
+                        card_style={styles[0]}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
+                      />
+                    ))}
+                    {/* <StoryCard
                       content="Add auto-generated IDs to DB in the insert APIs"
                       card_style={styles[0]}
-                    />
+                    /> */}
 
-                    <StoryCard
+                    {/* <StoryCard
                       content="Kanban board story create API"
                       card_style={styles[0]}
                     />
@@ -63,7 +150,6 @@ const Kanban = (props) => {
                       card_style={styles[0]}
                     />
 
-
                     <StoryCard
                       content="Swagger Documentation API integration"
                       card_style={styles[0]}
@@ -72,15 +158,27 @@ const Kanban = (props) => {
                     <StoryCard
                       content="Github latest commit fetch API"
                       card_style={styles[0]}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <h4 style={{ textAlign: "center" }}>DEV</h4>
+                  <h4 style={{ textAlign: "center" }}>IN_PROGRESS</h4>
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {devStories.map((story, index) => (
+                      <StoryCard
+                        key={story.story_id}
+                        content={story.story_description}
+                        card_style={styles[1]}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
+                      />
+                    ))}
+
+                    {/* <StoryCard
                       content="Integration of project ID with the Kanban Board"
                       card_style={styles[1]}
                     />
@@ -93,15 +191,28 @@ const Kanban = (props) => {
                     <StoryCard
                       content="Hyperlink and control flow within the text."
                       card_style={styles[1]}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <h4 style={{ textAlign: "center" }}>QA/REVIEW</h4>
+                  <h4 style={{ textAlign: "center" }}>IN_REVIEW</h4>
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {reviewStories.map((story, index) => (
+                      <StoryCard
+                        key={story.story_id}
+                        content={story.story_description}
+                        card_style={styles[2]}
+                        text_style={{ color: "white" }}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
+                      />
+                    ))}
+
+                    {/* <StoryCard
                       content="Kanban board UI including Dev, StoryID, Story Points"
                       card_style={styles[2]}
                       text_style={{ color: "white" }}
@@ -117,15 +228,28 @@ const Kanban = (props) => {
                       content="Update story status API (TODO -> DEV)"
                       card_style={styles[2]}
                       text_style={{ color: "white" }}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  <h4 style={{ textAlign: "center" }}>RELEASED</h4>
+                  <h4 style={{ textAlign: "center" }}>COMPLETED</h4>
                   <Card.Group
                     style={{ border: "1px dashed grey", borderRadius: "10px" }}
                   >
-                    <StoryCard
+                    {releasedStories.map((story, index) => (
+                      <StoryCard
+                        key={story.story_id}
+                        content={story.story_description}
+                        card_style={styles[3]}
+                        text_style={{ color: "white" }}
+                        developer_name = {story.developer_id}
+                        story_points = {story.story_points}
+                        story_id = {story.story_id}
+                        update_story_handler = {getProjectDetails}
+                      />
+                    ))}
+
+                    {/* <StoryCard
                       content="Client Side Routing"
                       card_style={styles[3]}
                       text_style={{ color: "white" }}
@@ -141,7 +265,7 @@ const Kanban = (props) => {
                       content="GET APIs with Postman v2.1 Collections"
                       card_style={styles[3]}
                       text_style={{ color: "white" }}
-                    />
+                    /> */}
                   </Card.Group>
                 </Grid.Column>
               </Grid.Row>

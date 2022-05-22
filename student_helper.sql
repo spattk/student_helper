@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: groupprojectmapping; Type: TABLE; Schema: public; Owner: sitesh
+-- Name: groupprojectmapping; Type: TABLE; Schema: public; Owner: shadow
 --
 
 CREATE TABLE public.groupprojectmapping (
@@ -31,10 +31,10 @@ CREATE TABLE public.groupprojectmapping (
 );
 
 
-ALTER TABLE public.groupprojectmapping OWNER TO sitesh;
+ALTER TABLE public.groupprojectmapping OWNER TO shadow;
 
 --
--- Name: projects; Type: TABLE; Schema: public; Owner: sitesh
+-- Name: projects; Type: TABLE; Schema: public; Owner: shadow
 --
 
 CREATE TABLE public.projects (
@@ -50,10 +50,10 @@ CREATE TABLE public.projects (
 );
 
 
-ALTER TABLE public.projects OWNER TO sitesh;
+ALTER TABLE public.projects OWNER TO shadow;
 
 --
--- Name: projectstorymapping; Type: TABLE; Schema: public; Owner: sitesh
+-- Name: projectstorymapping; Type: TABLE; Schema: public; Owner: shadow
 --
 
 CREATE TABLE public.projectstorymapping (
@@ -63,10 +63,10 @@ CREATE TABLE public.projectstorymapping (
 );
 
 
-ALTER TABLE public.projectstorymapping OWNER TO sitesh;
+ALTER TABLE public.projectstorymapping OWNER TO shadow;
 
 --
--- Name: stories; Type: TABLE; Schema: public; Owner: sitesh
+-- Name: stories; Type: TABLE; Schema: public; Owner: shadow
 --
 
 CREATE TABLE public.stories (
@@ -78,10 +78,10 @@ CREATE TABLE public.stories (
 );
 
 
-ALTER TABLE public.stories OWNER TO sitesh;
+ALTER TABLE public.stories OWNER TO shadow;
 
 --
--- Name: studentgroupmapping; Type: TABLE; Schema: public; Owner: sitesh
+-- Name: studentgroupmapping; Type: TABLE; Schema: public; Owner: shadow
 --
 
 CREATE TABLE public.studentgroupmapping (
@@ -92,10 +92,10 @@ CREATE TABLE public.studentgroupmapping (
 );
 
 
-ALTER TABLE public.studentgroupmapping OWNER TO sitesh;
+ALTER TABLE public.studentgroupmapping OWNER TO shadow;
 
 --
--- Name: todo; Type: TABLE; Schema: public; Owner: sitesh
+-- Name: todo; Type: TABLE; Schema: public; Owner: shadow
 --
 
 CREATE TABLE public.todo (
@@ -104,10 +104,10 @@ CREATE TABLE public.todo (
 );
 
 
-ALTER TABLE public.todo OWNER TO sitesh;
+ALTER TABLE public.todo OWNER TO shadow;
 
 --
--- Name: todo_todo_id_seq; Type: SEQUENCE; Schema: public; Owner: sitesh
+-- Name: todo_todo_id_seq; Type: SEQUENCE; Schema: public; Owner: shadow
 --
 
 CREATE SEQUENCE public.todo_todo_id_seq
@@ -119,17 +119,17 @@ CREATE SEQUENCE public.todo_todo_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.todo_todo_id_seq OWNER TO sitesh;
+ALTER TABLE public.todo_todo_id_seq OWNER TO shadow;
 
 --
--- Name: todo_todo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sitesh
+-- Name: todo_todo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: shadow
 --
 
 ALTER SEQUENCE public.todo_todo_id_seq OWNED BY public.todo.todo_id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: sitesh
+-- Name: users; Type: TABLE; Schema: public; Owner: shadow
 --
 
 CREATE TABLE public.users (
@@ -146,17 +146,17 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO sitesh;
+ALTER TABLE public.users OWNER TO shadow;
 
 --
--- Name: todo todo_id; Type: DEFAULT; Schema: public; Owner: sitesh
+-- Name: todo todo_id; Type: DEFAULT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.todo ALTER COLUMN todo_id SET DEFAULT nextval('public.todo_todo_id_seq'::regclass);
 
 
 --
--- Data for Name: groupprojectmapping; Type: TABLE DATA; Schema: public; Owner: sitesh
+-- Data for Name: groupprojectmapping; Type: TABLE DATA; Schema: public; Owner: shadow
 --
 
 COPY public.groupprojectmapping (group_id, project_id, grade) FROM stdin;
@@ -167,7 +167,7 @@ COPY public.groupprojectmapping (group_id, project_id, grade) FROM stdin;
 
 
 --
--- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: sitesh
+-- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: shadow
 --
 
 COPY public.projects (project_id, project_name, project_description, github_url, video_url, funding_url, status, domain, professor_id) FROM stdin;
@@ -178,7 +178,7 @@ COPY public.projects (project_id, project_name, project_description, github_url,
 
 
 --
--- Data for Name: projectstorymapping; Type: TABLE DATA; Schema: public; Owner: sitesh
+-- Data for Name: projectstorymapping; Type: TABLE DATA; Schema: public; Owner: shadow
 --
 
 COPY public.projectstorymapping (project_id, story_id, developer_id) FROM stdin;
@@ -197,7 +197,7 @@ COPY public.projectstorymapping (project_id, story_id, developer_id) FROM stdin;
 
 
 --
--- Data for Name: stories; Type: TABLE DATA; Schema: public; Owner: sitesh
+-- Data for Name: stories; Type: TABLE DATA; Schema: public; Owner: shadow
 --
 
 COPY public.stories (story_id, story_name, story_description, story_points, status) FROM stdin;
@@ -210,7 +210,7 @@ COPY public.stories (story_id, story_name, story_description, story_points, stat
 
 
 --
--- Data for Name: studentgroupmapping; Type: TABLE DATA; Schema: public; Owner: sitesh
+-- Data for Name: studentgroupmapping; Type: TABLE DATA; Schema: public; Owner: shadow
 --
 
 COPY public.studentgroupmapping (user_id, group_id, is_user_owner, is_active_group) FROM stdin;
@@ -233,7 +233,7 @@ COPY public.studentgroupmapping (user_id, group_id, is_user_owner, is_active_gro
 
 
 --
--- Data for Name: todo; Type: TABLE DATA; Schema: public; Owner: sitesh
+-- Data for Name: todo; Type: TABLE DATA; Schema: public; Owner: shadow
 --
 
 COPY public.todo (todo_id, description) FROM stdin;
@@ -244,14 +244,14 @@ COPY public.todo (todo_id, description) FROM stdin;
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: sitesh
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: shadow
 --
 
 COPY public.users (user_id, username, password, email, first_name, last_name, phone, role, auth_token, department) FROM stdin;
 123	karanr1	abcd	karanr1@uci.edu	Karan	Rao	6504229143	admin	IOT18BRY4KY	Administration
 456	karanja	abcd	karanja@uci.edu	Karan	Uppin	949123456	student	SOS92BBE8NY	MCS
 138	abhisj3	abcd	abhisj3@uci.edu	Abhishek	Jha	949654789	student	UMB35OBQ3WW	MCS
-921	siteshp	abcd	siteshp@uci.edu	Sitesh	Pattanaik	949091234	student	SZP68NOI9FH	MCS
+921	shadowp	abcd	shadowp@uci.edu	shadow	Pattanaik	949091234	student	SZP68NOI9FH	MCS
 892	whayes	efgh	whayes@uci.edu	Wayne	Hayes	949876452	professor	QKF98YXO3GU	MCS
 917	natashak	abcd	natashak@uci.edu	Natasha	Kulkarni	949674534	student	PQN16RGC1PC	MCS
 746	varshah	abcd	varshah@uci.edu	Varsha	Harishankar	949890765	student	IXA48BYQ9XS	MCS
@@ -264,14 +264,14 @@ COPY public.users (user_id, username, password, email, first_name, last_name, ph
 
 
 --
--- Name: todo_todo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sitesh
+-- Name: todo_todo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: shadow
 --
 
 SELECT pg_catalog.setval('public.todo_todo_id_seq', 3, true);
 
 
 --
--- Name: groupprojectmapping groupprojectmapping_pkey; Type: CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: groupprojectmapping groupprojectmapping_pkey; Type: CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.groupprojectmapping
@@ -279,7 +279,7 @@ ALTER TABLE ONLY public.groupprojectmapping
 
 
 --
--- Name: projects project_pkey; Type: CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: projects project_pkey; Type: CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.projects
@@ -287,7 +287,7 @@ ALTER TABLE ONLY public.projects
 
 
 --
--- Name: stories story_pkey; Type: CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: stories story_pkey; Type: CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.stories
@@ -295,7 +295,7 @@ ALTER TABLE ONLY public.stories
 
 
 --
--- Name: todo todo_pkey; Type: CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: todo todo_pkey; Type: CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.todo
@@ -303,7 +303,7 @@ ALTER TABLE ONLY public.todo
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.users
@@ -311,7 +311,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: groupprojectmapping groupprojectmapping_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: groupprojectmapping groupprojectmapping_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.groupprojectmapping
@@ -319,7 +319,7 @@ ALTER TABLE ONLY public.groupprojectmapping
 
 
 --
--- Name: projects project_professor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: projects project_professor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.projects
@@ -327,7 +327,7 @@ ALTER TABLE ONLY public.projects
 
 
 --
--- Name: projectstorymapping projectstorymapping_developer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: projectstorymapping projectstorymapping_developer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.projectstorymapping
@@ -335,7 +335,7 @@ ALTER TABLE ONLY public.projectstorymapping
 
 
 --
--- Name: projectstorymapping projectstorymapping_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: projectstorymapping projectstorymapping_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.projectstorymapping
@@ -343,7 +343,7 @@ ALTER TABLE ONLY public.projectstorymapping
 
 
 --
--- Name: projectstorymapping projectstorymapping_story_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: projectstorymapping projectstorymapping_story_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.projectstorymapping
@@ -351,7 +351,7 @@ ALTER TABLE ONLY public.projectstorymapping
 
 
 --
--- Name: studentgroupmapping studentgroupmapping_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: studentgroupmapping studentgroupmapping_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.studentgroupmapping
@@ -359,7 +359,7 @@ ALTER TABLE ONLY public.studentgroupmapping
 
 
 --
--- Name: studentgroupmapping studentgroupmapping_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: sitesh
+-- Name: studentgroupmapping studentgroupmapping_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: shadow
 --
 
 ALTER TABLE ONLY public.studentgroupmapping
