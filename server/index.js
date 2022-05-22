@@ -109,7 +109,7 @@ app.get("/stories", async (req,res) =>{
 app.get("/stories/:id", async (req,res) =>{
   try{
       const {id} = req.params;
-      const story = await pool.query("select * from stories where story_id = $1",[
+      const story = await pool.query("select s.story_id, p.project_id, u.user_id as developer_id, u.username as developer_name, story_name, story_description, story_points, status  from stories s, projectstorymapping p, users u where s.story_id = $1 and p.story_id = s.story_id and u.user_id = p.developer_id;",[
           id
       ]);
 
@@ -282,7 +282,29 @@ app.put("/projects/:id", async (req,res) => {
     }
 })
 
-app.listen(5000, () => {
-  console.log("server has started on port 5000");
+app.get("/developer/:name", async (req,res) =>{
+    try{
+        const {name} = req.params;
+        const developer = await pool.query("select user_id as developer_id, username as developer_name from users where username = $1",[
+            name
+        ]);
+        res.json(developer.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.get("/projects/:id/developers", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const developer = await pool.query("select username as developer_name from users u where user_id  in (select user_id  from studentgroupmapping s where group_id in (select group_id from groupprojectmapping g where project_id = $1))",[id]);
+        res.json(developer.rows);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
+app.listen(5001, () => {
+  console.log("server has started on port 5001");
 });
 

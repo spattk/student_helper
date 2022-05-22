@@ -12,7 +12,7 @@ const Footer = () => {
         padding: "15px",
       }}
     >
-      Student Helper | University of California, Irvine
+      Student Helper, Inc | University of California, Irvine
     </div>
   );
 };
