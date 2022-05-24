@@ -147,16 +147,15 @@ const Kanban = (props) => {
               }}
             >
               {project.project_name} Kanban Board
-            </h2>
-            <Modal
+              <Modal
               closeIcon
               open={open}
-              trigger={<Button>Add Story</Button>}
+              trigger={<Button secondary style={{float: 'right'}}>Add Story</Button>}
               onClose={() => setOpen(false)}
               onOpen={() => setOpen(true)}
             >
               <Header content='Add New Story' />
-              <Modal.Content>
+              <Modal.Content scrolling>
                 <Form>
                   <Form.Field>
                     <label>ID</label>
@@ -196,6 +195,8 @@ const Kanban = (props) => {
                 </Button>
               </Modal.Actions>
             </Modal>
+            </h2>
+            
             <Grid>
               <Grid.Row>
                 <Grid.Column width={4}>

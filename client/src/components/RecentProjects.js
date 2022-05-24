@@ -41,16 +41,16 @@ const RecentProjects = () => {
 
 
   return (
-    <div style={{ border: "1px solid red" }}>
+    <div>
       <Modal
         closeIcon
         open={open}
-        trigger={<Button>Add Project</Button>}
+        trigger={<Button secondary style={{float:'right', marginTop: '10px'}}>Add Project</Button>}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
       >
         <Header content='Add New Project' />
-        <Modal.Content>
+        <Modal.Content scrolling>
           <Form>
             <Form.Field>
               <label>ID</label>
@@ -105,8 +105,8 @@ const RecentProjects = () => {
           </Button>
         </Modal.Actions>
       </Modal>
-      <div style={{ textAlign: "center" }}>
-        <b>Recent Projects</b>
+      <div style={{ textAlign: "center", padding: '10px' }}>
+        <h2>All Projects</h2>
       </div>
       <div style={{ margin: "10px" }}>
         <Item.Group>
