@@ -30,6 +30,7 @@ const Kanban = (props) => {
   const [devStories, setDevStories] = useState([]);
   const [reviewStories, setReviewStories] = useState([]);
   const [releasedStories, setReleasedStories] = useState([]);
+  const [allDevelopers, setAllDevelopers] = useState([]);
 
   const getProjectDetails = async () => {
     try {
@@ -38,6 +39,16 @@ const Kanban = (props) => {
       );
       const projectJsonData = await projectResponse.json();
       setProject(projectJsonData);
+      let allDevelopersArray = [];
+      const allDevelopersResponse = await fetch(
+        `http://localhost:5001/projects/${id}/developers`
+      );
+      const allDevelopersResponseJson = await allDevelopersResponse.json();
+      allDevelopersArray.push("update-dev");
+      for (let i = 0; i < allDevelopersResponseJson.length; i++) {
+        allDevelopersArray.push(allDevelopersResponseJson[i].developer_name);
+      }
+      setAllDevelopers(allDevelopersArray);
 
       const projectStoriesResponse = await fetch(
         `http://localhost:5001/projects/${id}/stories`
@@ -69,55 +80,6 @@ const Kanban = (props) => {
     getProjectDetails();
   }, [id]);
 
-  const testMeClickHandler = () => {
-    console.log("hey there");
-    let newArray = projectStories;
-    for (var i = 0; i < newArray.length; i++) {
-      if (newArray[i].status === "TODO") {
-        newArray[i].status = "IN_PROGRESS";
-      }
-    }
-    console.log(newArray);
-    setProjectStories(newArray);
-
-    let temp = [];
-    setProjectStories((state) => {
-      temp = state.filter((story) => story.status === "TODO");
-      setTodoStories(temp);
-
-      temp = state.filter((story) => story.status === "IN_PROGRESS");
-      setDevStories(temp);
-
-      temp = state.filter((story) => story.status === "IN_REVIEW");
-      setReviewStories(temp);
-
-      temp = state.filter((story) => story.status === "COMPLETED");
-      setReleasedStories(temp);
-
-      return state;
-    });
-  }
-  const [open, setOpen] = React.useState(false)
-  const [formState, setFormState] = useState({formId:'', formName:'', formDesc:'', formPoints: '', formStatus:'', formDeveloper:''});
-  const submit = () => {
-    fetch('http://localhost:5001/stories', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({story_id: formState.formId, story_name : formState.formName, story_description: formState.formDesc, story_points: formState.formPoints, status: formState.formStatus, project_id: id, developer_id: formState.formDeveloper})
-    }).then(res => res.json())
-      .then(res => {console.log(res);getProjectDetails()});
-    setOpen(false)
-  }
-  
-
-  const handleChange = (e) => {
-    setFormState({...formState, [e.target.name]: e.target.value})
-  };
-
-
   return (
     <Container fluid={true}>
       <MenuHeader />
@@ -133,6 +95,7 @@ const Kanban = (props) => {
                 textAlign: "center",
                 border: "1px dashed black",
                 padding: "10px",
+                borderRadius: '10px'
               }}
             >
               {project.project_name} Kanban Board
@@ -197,10 +160,13 @@ const Kanban = (props) => {
                         key={story.story_id}
                         content={story.story_description}
                         card_style={styles[0]}
-                        developer_name={story.developer_id}
+                        developer_name={story.developer}
                         story_points={story.story_points}
                         story_id={story.story_id}
                         update_story_handler={getProjectDetails}
+                        bg_color={styles[0].backgroundColor}
+                        text_color="black"
+                        all_developers={allDevelopers}
                       />
                     ))}
                     {/* <StoryCard
@@ -239,10 +205,13 @@ const Kanban = (props) => {
                         key={story.story_id}
                         content={story.story_description}
                         card_style={styles[1]}
-                        developer_name={story.developer_id}
+                        developer_name={story.developer}
                         story_points={story.story_points}
                         story_id={story.story_id}
                         update_story_handler={getProjectDetails}
+                        bg_color={styles[1].backgroundColor}
+                        text_color="black"
+                        all_developers={allDevelopers}
                       />
                     ))}
 
@@ -273,10 +242,13 @@ const Kanban = (props) => {
                         content={story.story_description}
                         card_style={styles[2]}
                         text_style={{ color: "white" }}
-                        developer_name={story.developer_id}
+                        developer_name={story.developer}
                         story_points={story.story_points}
                         story_id={story.story_id}
                         update_story_handler={getProjectDetails}
+                        bg_color={styles[2].backgroundColor}
+                        text_color="white"
+                        all_developers={allDevelopers}
                       />
                     ))}
 
@@ -310,10 +282,13 @@ const Kanban = (props) => {
                         content={story.story_description}
                         card_style={styles[3]}
                         text_style={{ color: "white" }}
-                        developer_name={story.developer_id}
+                        developer_name={story.developer}
                         story_points={story.story_points}
                         story_id={story.story_id}
                         update_story_handler={getProjectDetails}
+                        bg_color={styles[3].backgroundColor}
+                        text_color="white"
+                        all_developers={allDevelopers}
                       />
                     ))}
 
