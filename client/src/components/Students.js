@@ -94,7 +94,7 @@ const Students = () => {
                 trigger={
                   <Button
                     
-                    style={{ float: "right", marginTop: "10px", backgroundColor: "#193D62", color: "white" }}
+                    style={{ float: "right", marginTop: "10px", marginRight: "10px", backgroundColor: "#193D62", color: "white" }}
                   >
                     Add Student
                   </Button>
@@ -203,7 +203,12 @@ const Students = () => {
                   </Button>
                 </Modal.Actions>
               </Modal>
-              <div style={{ textAlign: "center", padding: "10px" }}>
+              <div style={{ textAlign: "center", padding: "10px", marginTop: "10px",
+                textAlign: "center",
+                border: "1px solid black",
+                marginLeft: "10px",
+                padding: "10px",
+                borderRadius: '10px' }}>
                 <h2>Registered Students</h2>
               </div>
               <div style={{ margin: "10px", marginBottom: "70px" }}>

@@ -41,11 +41,11 @@ const RecentProjects = () => {
 
 
   return (
-    <div style={{padding:'10px', backgroundColor:'#F3F4F5'}}>
+    <div style={{backgroundColor:'#F3F4F5'}}>
       <Modal
         closeIcon
         open={open}
-        trigger={<Button style={{float:'right', marginTop: '10px', backgroundColor: "#193D62", color:"white"}}>Add Project</Button>}
+        trigger={<Button style={{float:'right', margin: '10px', marginRight: "20px", paddingTop: "10px", backgroundColor: "#193D62", color:"white"}}>Add Project</Button>}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
       >
@@ -105,7 +105,13 @@ const RecentProjects = () => {
           </Button>
         </Modal.Actions>
       </Modal>
-      <div style={{ textAlign: "center", padding: '10px' }}>
+      <div style={{ textAlign: "center", padding: '10px', marginTop: "10px",
+                textAlign: "center",
+                marginLeft: "10px",
+                marginRight: "10px",
+                border: "1px solid black",
+                padding: "10px",
+                borderRadius: '10px' }}>
         <h2>All Projects</h2>
       </div>
       <div style={{ margin: "10px", marginBottom: "70px"}}>
