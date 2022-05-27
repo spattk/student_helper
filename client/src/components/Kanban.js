@@ -108,12 +108,14 @@ const Kanban = (props) => {
           <Grid.Column width={3}>
             <VerticalNavigation />
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column width={13}>
             <h2
               style={{
                 marginTop: "10px",
                 textAlign: "center",
-                border: "1px dashed black",
+                border: "1px solid black",
+                marginLeft: "-20px",
+                marginRight: "10px",
                 padding: "10px",
                 borderRadius: '10px'
               }}
@@ -122,7 +124,7 @@ const Kanban = (props) => {
               <Modal
               closeIcon
               open={open}
-              trigger={<Button secondary style={{float: 'right'}}>Add Story</Button>}
+              trigger={<Button style={{float: 'right', backgroundColor: "#193D62", color: "white"}}>Add Story</Button>}
               onClose={() => setOpen(false)}
               onOpen={() => setOpen(true)}
             >
@@ -174,7 +176,7 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>TODO</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {todoStories.map((story, index) => (
                       <StoryCard
@@ -219,7 +221,7 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>IN_PROGRESS</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {devStories.map((story, index) => (
                       <StoryCard
@@ -255,7 +257,7 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>IN_REVIEW</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {reviewStories.map((story, index) => (
                       <StoryCard
@@ -295,7 +297,7 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>COMPLETED</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {releasedStories.map((story, index) => (
                       <StoryCard
