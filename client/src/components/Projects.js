@@ -15,7 +15,7 @@ function Projects() {
           <Grid.Column width={3}>
             <VerticalNavigation />
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column width={13}>
             <RecentProjects />
           </Grid.Column>
         </Grid.Row>

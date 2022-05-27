@@ -1,39 +1,68 @@
-import React, { Component } from 'react'
-import { Menu, Container } from 'semantic-ui-react'
+import React, { Component } from "react";
+import { Menu, Container } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default class MenuExampleVerticalPointing extends Component {
-  state = { activeItem: 'home' }
+  state = { activeItem: "home" };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
+    console.log(e + " @@@@@@ " + name);
+  };
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem } = this.state;
 
     return (
-      <Container>
-      <Menu pointing vertical>
-        <Menu.Item
-          name='dashboard'
-          active={activeItem === 'dashboard'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name='projects'
-          active={activeItem === 'projects'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name='groups'
-          active={activeItem === 'groups'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name='students'
-          active={activeItem === 'students'}
-          onClick={this.handleItemClick}
-        />
-      </Menu>
+      <Container >
+        <Menu pointing vertical style={{backgroundColor:'#F07C41'}}>
+          <Link to="/dashboard">
+            <Menu.Item
+              name="dashboard"
+              active={activeItem === "dashboard"}
+              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold", fontSize:'15px'}}
+            />
+          </Link>
+
+          <Link to="/projects">
+            <Menu.Item
+              name="projects"
+              active={activeItem === "projects"}
+              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
+            />
+          </Link>
+
+          <Link to="/groups">
+            <Menu.Item
+              name="groups"
+              active={activeItem === "groups"}
+              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
+            />
+          </Link>
+
+          <Link to="/students">
+            <Menu.Item
+              name="students"
+              active={activeItem === "students"}
+              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
+            />
+          </Link>
+
+          <Link to="/users">
+            <Menu.Item
+              name="users"
+              active={activeItem === "users"}
+              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
+            />
+          </Link>
+
+        </Menu>
       </Container>
-    )
+    );
   }
 }
