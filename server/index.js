@@ -136,7 +136,7 @@ app.get("/users/:id/stories", async (req,res) =>{
 app.get("/projects/:id/stories", async (req,res) =>{
     try{
         const {id} = req.params;
-        const stories = await pool.query("select stories.story_id,story_name,story_description,story_points,status,username AS developer, user_id as developer_id from stories join projectstorymapping on stories.story_id = projectstorymapping.story_id join users on users.user_id = projectstorymapping.developer_id where project_id = $1",[
+        const stories = await pool.query("select stories.story_id,story_name,story_description,story_points,status,username AS developer, user_id as developer_id from stories join projectstorymapping on stories.story_id = projectstorymapping.story_id join users on users.user_id = projectstorymapping.developer_id where project_id = $1 order by story_id",[
             id
         ]);
   
