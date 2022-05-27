@@ -6,7 +6,7 @@ const Footer = () => {
       style={{
         textAlign: "center",
         bottom: "0px",
-        position: "absolute",
+        position: "relative",
         fontWeight: "bold",
         width: "100%",
         padding: "15px",

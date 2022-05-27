@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 
-const Student = (props) => {
+const User = (props) => {
   return (
     <Card>
       <Card.Content>
@@ -20,4 +20,4 @@ const Student = (props) => {
   );
 };
 
-export default Student;
+export default User;

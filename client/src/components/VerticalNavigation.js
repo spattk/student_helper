@@ -48,6 +48,14 @@ export default class MenuExampleVerticalPointing extends Component {
             />
           </Link>
 
+          <Link to="/users">
+            <Menu.Item
+              name="users"
+              active={activeItem === "users"}
+              onClick={this.handleItemClick}
+            />
+          </Link>
+
         </Menu>
       </Container>
     );

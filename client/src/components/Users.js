@@ -15,14 +15,14 @@ import MenuHeader from "./MenuHeader";
 import Student from "./Student";
 import VerticalNavigation from "./VerticalNavigation";
 
-const Students = () => {
-  const [allStudents, setAllStudents] = useState([]);
+const Users = () => {
+  const [allUsers, setAllUsers] = useState([]);
 
   const getAllStudents = async () => {
     try {
-      const response = await fetch("http://localhost:5001/users/students");
+      const response = await fetch("http://localhost:5001/users");
       const jsonData = await response.json();
-      setAllStudents(jsonData);
+      setAllUsers(jsonData);
       console.log(jsonData);
     } catch (err) {
       console.log(err);
@@ -96,7 +96,7 @@ const Students = () => {
                     secondary
                     style={{ float: "right", marginTop: "10px" }}
                   >
-                    Add Student
+                    Add User
                   </Button>
                 }
                 onClose={() => setOpen(false)}
@@ -204,11 +204,11 @@ const Students = () => {
                 </Modal.Actions>
               </Modal>
               <div style={{ textAlign: "center", padding: "10px" }}>
-                <h2>Registered Students</h2>
+                <h2>All Users</h2>
               </div>
               <div style={{ margin: "10px" }}>
                 <Card.Group>
-                  {allStudents.map((student) => (
+                  {allUsers.map((student) => (
                     <Student
                       key={student.user_id}
                       name={student.first_name + " " + student.last_name}
@@ -231,4 +231,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default Users;

@@ -20,7 +20,7 @@ app.get("/users", async (req,res) =>{
 
 app.get("/users/students", async (req,res) =>{
   try{
-      const allStudents = await pool.query("select * from users where role='student'");
+      const allStudents = await pool.query("select * from users where lower(role)='student'");
       res.json(allStudents.rows);
   } catch(err) {
       console.error(err.message);
