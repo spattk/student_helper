@@ -80,34 +80,6 @@ const Kanban = (props) => {
     getProjectDetails();
   }, [id]);
 
-  const testMeClickHandler = () => {
-    console.log("hey there");
-    let newArray = projectStories;
-    for (var i = 0; i < newArray.length; i++) {
-      if (newArray[i].status === "TODO") {
-        newArray[i].status = "IN_PROGRESS";
-      }
-    }
-    console.log(newArray);
-    setProjectStories(newArray);
-
-    let temp = [];
-    setProjectStories((state) => {
-      temp = state.filter((story) => story.status === "TODO");
-      setTodoStories(temp);
-
-      temp = state.filter((story) => story.status === "IN_PROGRESS");
-      setDevStories(temp);
-
-      temp = state.filter((story) => story.status === "IN_REVIEW");
-      setReviewStories(temp);
-
-      temp = state.filter((story) => story.status === "COMPLETED");
-      setReleasedStories(temp);
-
-      return state;
-    });
-  }
   const [open, setOpen] = React.useState(false)
   const [formState, setFormState] = useState({formId:'', formName:'', formDesc:'', formPoints: '', formStatus:'', formDeveloper:''});
   const submit = () => {
