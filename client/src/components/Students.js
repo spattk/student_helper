@@ -63,7 +63,7 @@ const Students = () => {
                 onOpen={() => setOpen(true)}
               >
                 <Header content='Add New Student' />
-                <Modal.Content>
+                <Modal.Content scrolling>
                   <Form>
                     <Form.Field>
                       <label>User ID</label>
