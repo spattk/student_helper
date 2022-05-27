@@ -4,7 +4,7 @@ import { Button, Item } from "semantic-ui-react";
 
 const Project = (props) => {
   return (
-    <Item style={{ border: "1px dashed black", padding: "10px" }}>
+    <Item style={{ border: "1px dashed black", borderRadius: '12px', padding: "10px" }}>
       <Item.Image
         size="tiny"
         src="https://react.semantic-ui.com/images/wireframe/image.png"

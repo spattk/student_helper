@@ -153,6 +153,7 @@ const StoryCard = (props) => {
           id={props.story_id}
         >
           <select
+            onChange={(e) => handleStatusTypeChange(e)}
             style={{
               width: "100%",
               fontSize: "12px",
