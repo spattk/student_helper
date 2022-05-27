@@ -12,7 +12,7 @@ import {
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
-import Student from "./Student";
+import User from "./User";
 import VerticalNavigation from "./VerticalNavigation";
 
 const Users = () => {
@@ -93,8 +93,8 @@ const Users = () => {
                 open={open}
                 trigger={
                   <Button
-                    secondary
-                    style={{ float: "right", marginTop: "10px" }}
+                    
+                    style={{ float: "right", marginTop: "10px", backgroundColor: "#193D62", color: "white" }}
                   >
                     Add User
                   </Button>
@@ -206,10 +206,10 @@ const Users = () => {
               <div style={{ textAlign: "center", padding: "10px" }}>
                 <h2>All Users</h2>
               </div>
-              <div style={{ margin: "10px" }}>
+              <div style={{ margin: "10px", marginBottom: "70px" }}>
                 <Card.Group>
                   {allUsers.map((student) => (
-                    <Student
+                    <User
                       key={student.user_id}
                       name={student.first_name + " " + student.last_name}
                       username={student.username}

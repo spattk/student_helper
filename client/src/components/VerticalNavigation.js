@@ -14,13 +14,14 @@ export default class MenuExampleVerticalPointing extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Container>
-        <Menu pointing vertical>
+      <Container >
+        <Menu pointing vertical style={{backgroundColor:'#F07C41'}}>
           <Link to="/dashboard">
             <Menu.Item
               name="dashboard"
               active={activeItem === "dashboard"}
               onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold", fontSize:'15px'}}
             />
           </Link>
 
@@ -29,6 +30,7 @@ export default class MenuExampleVerticalPointing extends Component {
               name="projects"
               active={activeItem === "projects"}
               onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
             />
           </Link>
 
@@ -37,6 +39,7 @@ export default class MenuExampleVerticalPointing extends Component {
               name="groups"
               active={activeItem === "groups"}
               onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
             />
           </Link>
 
@@ -45,6 +48,7 @@ export default class MenuExampleVerticalPointing extends Component {
               name="students"
               active={activeItem === "students"}
               onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
             />
           </Link>
 
@@ -53,6 +57,7 @@ export default class MenuExampleVerticalPointing extends Component {
               name="users"
               active={activeItem === "users"}
               onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold"}}
             />
           </Link>
 

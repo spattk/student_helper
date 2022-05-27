@@ -42,7 +42,7 @@ const Students = () => {
     formFName: "",
     formLName: "",
     formPhone: "",
-    formRole: "",
+    formRole: "Student",
     formAuthToken: "",
     formDepartment: "",
   });
@@ -87,14 +87,14 @@ const Students = () => {
             <VerticalNavigation />
           </Grid.Column>
           <Grid.Column width={13}>
-            <div>
+            <div >
               <Modal
                 closeIcon
                 open={open}
                 trigger={
                   <Button
-                    secondary
-                    style={{ float: "right", marginTop: "10px" }}
+                    
+                    style={{ float: "right", marginTop: "10px", backgroundColor: "#193D62", color: "white" }}
                   >
                     Add Student
                   </Button>
@@ -206,7 +206,7 @@ const Students = () => {
               <div style={{ textAlign: "center", padding: "10px" }}>
                 <h2>Registered Students</h2>
               </div>
-              <div style={{ margin: "10px" }}>
+              <div style={{ margin: "10px", marginBottom: "70px" }}>
                 <Card.Group>
                   {allStudents.map((student) => (
                     <Student
