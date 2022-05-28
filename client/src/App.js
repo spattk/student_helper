@@ -7,7 +7,7 @@ import Projects from "./components/Projects";
 import Students from "./components/Students";
 import Login from './components/Login';
 import useToken from './useToken';
-
+import Users from "./components/Users";
 
 function App() {
   const { token, setToken } = useToken();
@@ -19,6 +19,7 @@ function App() {
       <Route path="/" element={<Dashboard />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="students" element={<Students />} />
+      <Route path="users" element={<Users />} />
       <Route path="projects" element={<Projects />} />
       <Route path="kanban/:id" element={<Kanban />} />
       <Route path="login" element={<Login setToken={setToken} />} />

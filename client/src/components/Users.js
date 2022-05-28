@@ -12,17 +12,17 @@ import {
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
-import Student from "./Student";
+import User from "./User";
 import VerticalNavigation from "./VerticalNavigation";
 
-const Students = () => {
-  const [allStudents, setAllStudents] = useState([]);
+const Users = () => {
+  const [allUsers, setAllUsers] = useState([]);
 
   const getAllStudents = async () => {
     try {
-      const response = await fetch("http://localhost:5001/users/students");
+      const response = await fetch("http://localhost:5001/users");
       const jsonData = await response.json();
-      setAllStudents(jsonData);
+      setAllUsers(jsonData);
       console.log(jsonData);
     } catch (err) {
       console.log(err);
@@ -42,7 +42,7 @@ const Students = () => {
     formFName: "",
     formLName: "",
     formPhone: "",
-    formRole: "Student",
+    formRole: "",
     formAuthToken: "",
     formDepartment: "",
   });
@@ -87,7 +87,7 @@ const Students = () => {
             <VerticalNavigation />
           </Grid.Column>
           <Grid.Column width={13}>
-            <div >
+            <div>
               <Modal
                 closeIcon
                 open={open}
@@ -96,7 +96,7 @@ const Students = () => {
                     
                     style={{ float: "right", marginTop: "10px", marginRight: "10px", backgroundColor: "#193D62", color: "white" }}
                   >
-                    Add Student
+                    Add User
                   </Button>
                 }
                 onClose={() => setOpen(false)}
@@ -203,18 +203,18 @@ const Students = () => {
                   </Button>
                 </Modal.Actions>
               </Modal>
-              <div style={{ textAlign: "center", padding: "10px", marginTop: "10px",
+              <div style={{ textAlign: "center", padding: '10px', marginTop: "10px",
                 textAlign: "center",
                 border: "1px solid black",
-                marginLeft: "10px",
                 padding: "10px",
+                marginLeft: "10px",
                 borderRadius: '10px' }}>
-                <h2>Registered Students</h2>
+                <h2>All Users</h2>
               </div>
               <div style={{ margin: "10px", marginBottom: "70px" }}>
                 <Card.Group>
-                  {allStudents.map((student) => (
-                    <Student
+                  {allUsers.map((student) => (
+                    <User
                       key={student.user_id}
                       name={student.first_name + " " + student.last_name}
                       username={student.username}
@@ -236,4 +236,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default Users;

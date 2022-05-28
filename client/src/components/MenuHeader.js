@@ -11,22 +11,19 @@ export default class MenuHeader extends Component {
 
     return (
       <div>
-        <Segment>
-          <Menu secondary>
+        <Segment style={{backgroundColor: '#193D62'}}>
+          <Menu style={{backgroundColor: '#193D62', border:'1px solid white'}}>
             <Menu.Item
               name="student helper"
               active={activeItem === "student helper"}
               onClick={this.handleItemClick}
+              style={{color:"white", fontWeight: "bold"}}
             />
             <Menu.Item
               name="home"
               active={activeItem === "home"}
               onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="add new project"
-              active={activeItem === "add new project"}
-              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight: "bold"}}
             />
 
             <Menu.Menu position="right">
@@ -37,6 +34,7 @@ export default class MenuHeader extends Component {
                 name="logout"
                 active={activeItem === "logout"}
                 onClick={this.handleItemClick}
+                style={{color:"white", fontWeight: "bold"}}
               />
             </Menu.Menu>
           </Menu>

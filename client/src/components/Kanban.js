@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Card, Container, Grid } from "semantic-ui-react";
+import { Button, Card, Container, Grid, Header, Icon, Modal, Form } from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
@@ -30,6 +30,7 @@ const Kanban = (props) => {
   const [devStories, setDevStories] = useState([]);
   const [reviewStories, setReviewStories] = useState([]);
   const [releasedStories, setReleasedStories] = useState([]);
+  const [allDevelopers, setAllDevelopers] = useState([]);
 
   const getProjectDetails = async () => {
     try {
@@ -38,6 +39,16 @@ const Kanban = (props) => {
       );
       const projectJsonData = await projectResponse.json();
       setProject(projectJsonData);
+      let allDevelopersArray = [];
+      const allDevelopersResponse = await fetch(
+        `http://localhost:5001/projects/${id}/developers`
+      );
+      const allDevelopersResponseJson = await allDevelopersResponse.json();
+      allDevelopersArray.push("update-dev");
+      for (let i = 0; i < allDevelopersResponseJson.length; i++) {
+        allDevelopersArray.push(allDevelopersResponseJson[i].developer_name);
+      }
+      setAllDevelopers(allDevelopersArray);
 
       const projectStoriesResponse = await fetch(
         `http://localhost:5001/projects/${id}/stories`
@@ -69,34 +80,25 @@ const Kanban = (props) => {
     getProjectDetails();
   }, [id]);
 
-  const testMeClickHandler = () => {
-    console.log("hey there");
-    let newArray = projectStories;
-    for(var i=0;i<newArray.length;i++){
-      if(newArray[i].status === "TODO"){
-        newArray[i].status = "IN_PROGRESS";
-      }
-    }
-    console.log(newArray);
-    setProjectStories(newArray);
+  const [open, setOpen] = React.useState(false)
+  const [formState, setFormState] = useState({formId:'', formName:'', formDesc:'', formPoints: '', formStatus:'', formDeveloper:''});
+  const submit = () => {
+    fetch('http://localhost:5001/stories', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({story_id: formState.formId, story_name : formState.formName, story_description: formState.formDesc, story_points: formState.formPoints, status: formState.formStatus, project_id: id, developer_id: formState.formDeveloper})
+    }).then(res => res.json())
+      .then(res => {console.log(res);getProjectDetails()});
+    setOpen(false)
+  }
+  
 
-    let temp = [];
-    setProjectStories((state) => {
-      temp = state.filter((story) => story.status === "TODO");
-      setTodoStories(temp);
-
-      temp = state.filter((story) => story.status === "IN_PROGRESS");
-      setDevStories(temp);
-
-      temp = state.filter((story) => story.status === "IN_REVIEW");
-      setReviewStories(temp);
-
-      temp = state.filter((story) => story.status === "COMPLETED");
-      setReleasedStories(temp);
-
-      return state;
-    });
-  } 
+  const handleChange = (e) => {
+    setFormState({...formState, [e.target.name]: e.target.value})
+  };
 
   return (
     <Container fluid={true}>
@@ -106,33 +108,88 @@ const Kanban = (props) => {
           <Grid.Column width={3}>
             <VerticalNavigation />
           </Grid.Column>
-          <Grid.Column width={12}>
+          <Grid.Column width={13}>
             <h2
               style={{
                 marginTop: "10px",
                 textAlign: "center",
-                border: "1px dashed black",
+                border: "1px solid black",
+                marginLeft: "-20px",
+                marginRight: "10px",
                 padding: "10px",
+                borderRadius: '10px'
               }}
             >
               {project.project_name} Kanban Board
+              <Modal
+              closeIcon
+              open={open}
+              trigger={<Button style={{float: 'right', backgroundColor: "#193D62", color: "white"}}>Add Story</Button>}
+              onClose={() => setOpen(false)}
+              onOpen={() => setOpen(true)}
+            >
+              <Header content='Add New Story' />
+              <Modal.Content scrolling>
+                <Form>
+                  <Form.Field>
+                    <label>ID</label>
+                    <input name='formId' placeholder='ID' value={formState.formId}
+                      onChange={handleChange} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Name</label>
+                    <input name='formName' placeholder='Name' value={formState.formName}
+                      onChange={handleChange} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Description</label>
+                    <input name='formDesc' placeholder='Description' value={formState.formDesc}
+                      onChange={handleChange} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Points</label>
+                    <input name='formPoints' placeholder='Points' value={formState.formPoints}
+                      onChange={handleChange}/>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Status</label>
+                    <input name='formStatus' placeholder='Status' value={formState.formStatus}
+                      onChange={handleChange}/>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Developer ID</label>
+                    <input name='formDeveloper' placeholder='Developer ID' value={formState.formDeveloper}
+                      onChange={handleChange}/>
+                  </Form.Field>
+                </Form>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button color='green' onClick={submit}>
+                  <Icon name='checkmark' /> Submit
+                </Button>
+              </Modal.Actions>
+            </Modal>
             </h2>
+            
             <Grid>
               <Grid.Row>
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>TODO</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {todoStories.map((story, index) => (
                       <StoryCard
                         key={story.story_id}
                         content={story.story_description}
                         card_style={styles[0]}
-                        developer_name = {story.developer_id}
-                        story_points = {story.story_points}
-                        story_id = {story.story_id}
-                        update_story_handler = {getProjectDetails}
+                        developer_name={story.developer}
+                        story_points={story.story_points}
+                        story_id={story.story_id}
+                        update_story_handler={getProjectDetails}
+                        bg_color={styles[0].backgroundColor}
+                        text_color="black"
+                        all_developers={allDevelopers}
                       />
                     ))}
                     {/* <StoryCard
@@ -164,17 +221,20 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>IN_PROGRESS</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {devStories.map((story, index) => (
                       <StoryCard
                         key={story.story_id}
                         content={story.story_description}
                         card_style={styles[1]}
-                        developer_name = {story.developer_id}
-                        story_points = {story.story_points}
-                        story_id = {story.story_id}
-                        update_story_handler = {getProjectDetails}
+                        developer_name={story.developer}
+                        story_points={story.story_points}
+                        story_id={story.story_id}
+                        update_story_handler={getProjectDetails}
+                        bg_color={styles[1].backgroundColor}
+                        text_color="black"
+                        all_developers={allDevelopers}
                       />
                     ))}
 
@@ -197,7 +257,7 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>IN_REVIEW</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {reviewStories.map((story, index) => (
                       <StoryCard
@@ -205,10 +265,13 @@ const Kanban = (props) => {
                         content={story.story_description}
                         card_style={styles[2]}
                         text_style={{ color: "white" }}
-                        developer_name = {story.developer_id}
-                        story_points = {story.story_points}
-                        story_id = {story.story_id}
-                        update_story_handler = {getProjectDetails}
+                        developer_name={story.developer}
+                        story_points={story.story_points}
+                        story_id={story.story_id}
+                        update_story_handler={getProjectDetails}
+                        bg_color={styles[2].backgroundColor}
+                        text_color="white"
+                        all_developers={allDevelopers}
                       />
                     ))}
 
@@ -234,7 +297,7 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>COMPLETED</h4>
                   <Card.Group
-                    style={{ border: "1px dashed grey", borderRadius: "10px" }}
+                    style={{ border: "1px solid grey", borderRadius: "10px" }}
                   >
                     {releasedStories.map((story, index) => (
                       <StoryCard
@@ -242,10 +305,13 @@ const Kanban = (props) => {
                         content={story.story_description}
                         card_style={styles[3]}
                         text_style={{ color: "white" }}
-                        developer_name = {story.developer_id}
-                        story_points = {story.story_points}
-                        story_id = {story.story_id}
-                        update_story_handler = {getProjectDetails}
+                        developer_name={story.developer}
+                        story_points={story.story_points}
+                        story_id={story.story_id}
+                        update_story_handler={getProjectDetails}
+                        bg_color={styles[3].backgroundColor}
+                        text_color="white"
+                        all_developers={allDevelopers}
                       />
                     ))}
 

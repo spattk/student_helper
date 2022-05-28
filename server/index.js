@@ -57,6 +57,15 @@ app.get("/users", async (req, res) => {
     }
 });
 
+app.get("/users/students", async (req,res) =>{
+  try{
+      const allStudents = await pool.query("select * from users where lower(role)='student'");
+      res.json(allStudents.rows);
+  } catch(err) {
+      console.error(err.message);
+  }
+});
+
 app.get("/users/students", async (req, res) => {
     try {
         const allStudents = await pool.query("select * from users where role='student'");
@@ -145,13 +154,12 @@ app.get("/stories", async (req, res) => {
     }
 });
 
-app.get("/stories/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const story = await pool.query("select * from stories where story_id = $1", [
-            id
-        ]);
-
+app.get("/stories/:id", async (req,res) =>{
+  try{
+      const {id} = req.params;
+      const story = await pool.query("select s.story_id, p.project_id, u.user_id as developer_id, u.username as developer_name, story_name, story_description, story_points, status  from stories s, projectstorymapping p, users u where s.story_id = $1 and p.story_id = s.story_id and u.user_id = p.developer_id;",[
+          id
+      ]);
         res.json(story.rows[0]);
     } catch (err) {
         console.error(err.message);
@@ -172,26 +180,24 @@ app.get("/users/:id/stories", async (req, res) => {
     }
 });
 
-app.get("/projects/:id/stories", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const stories = await pool.query("select * from stories where story_id in (select story_id from projectstorymapping where project_id = $1)", [
+app.get("/projects/:id/stories", async (req,res) =>{
+    try{
+        const {id} = req.params;
+        const stories = await pool.query("select stories.story_id,story_name,story_description,story_points,status,username AS developer, user_id as developer_id from stories join projectstorymapping on stories.story_id = projectstorymapping.story_id join users on users.user_id = projectstorymapping.developer_id where project_id = $1 order by story_id",[
             id
         ]);
-
         res.json(stories.rows);
     } catch (err) {
         console.error(err.message);
     }
 });
 
-app.post("/projects", async (req, res) => {
-    try {
-        const { project_id, project_name, project_description, github_url, video_url, funding_url, project_status, domain, professor_id } = await req.body;
-
+app.post("/projects", async(req,res) => {
+    try{
+        const {project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id} = await req.body;  
         const newProject = await pool.query(
-            "INSERT INTO projects (project_id,project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *",
-            [project_id, project_name, project_description, github_url, video_url, funding_url, project_status, domain, professor_id]
+            "INSERT INTO projects (project_id, project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8::text,$9) RETURNING *", 
+            [project_id,project_name,project_description,github_url,video_url,funding_url,project_status,domain,professor_id]
         );
 
         res.json(newProject.rows[0]);
@@ -200,13 +206,14 @@ app.post("/projects", async (req, res) => {
     }
 })
 
-app.post("/users", async (req, res) => {
-    try {
-        const { user_id, username, password, email, first_name, last_name, phone, role, auth_token, department } = await req.body;
 
-        const newStory = await pool.query(
-            "INSERT INTO users (user_id,username,password,email,first_name,last_name,phone,role,auth_token,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *",
-            [user_id, username, password, email, first_name, last_name, phone, role, auth_token, department]
+app.post("/users",async(req,res) => {
+    try{
+        const {user_id,username,password,email,first_name,last_name,phone,role,auth_token,department}  = await req.body;
+
+        const newUser = await pool.query(
+            "INSERT INTO users (user_id,username,password,email,first_name,last_name,phone,role,auth_token,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *", 
+            [user_id,username,password,email,first_name,last_name,phone,role,auth_token,department]
         );
 
         res.json(newStory.rows[0]);
@@ -222,6 +229,21 @@ app.post("/groupprojectmapping", async (req, res) => {
         const newStory = await pool.query(
             "INSERT INTO groupprojectmapping (group_id,project_id,grade) VALUES($1,$2,$3) RETURNING *",
             [group_id, project_id, grade]
+          );
+
+        res.json(newStory.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+app.post("/stories",async(req,res) => {
+    try{
+        const {story_id,story_name,story_description,story_points,status,project_id,developer_id}  = await req.body;
+
+        const newStory = await pool.query(
+            "INSERT INTO stories (story_id,story_name,story_description,story_points,status) VALUES($1,$2,$3,$4,$5) RETURNING *", 
+            [story_id,story_name,story_description,story_points,status]
         );
 
         res.json(newStory.rows[0]);
@@ -320,8 +342,29 @@ app.put("/projects/:id", async (req, res) => {
 })
 
 
+app.get("/developer/:name", async (req,res) =>{
+    try{
+        const {name} = req.params;
+        const developer = await pool.query("select user_id as developer_id, username as developer_name from users where username = $1",[
+            name
+        ]);
+        res.json(developer.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+})
+
+app.get("/projects/:id/developers", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const developer = await pool.query("select username as developer_name from users u where user_id  in (select user_id  from studentgroupmapping s where group_id in (select group_id from groupprojectmapping g where project_id = $1))",[id]);
+        res.json(developer.rows);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
 
 app.listen(5001, () => {
-    console.log("server has started on port 5001");
+  console.log("server has started on port 5001");
 });
 

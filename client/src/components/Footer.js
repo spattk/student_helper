@@ -5,14 +5,16 @@ const Footer = () => {
     <div
       style={{
         textAlign: "center",
-        bottom: "0px",
-        position: "absolute",
+        position: "fixed",
+        bottom: "0",
         fontWeight: "bold",
         width: "100%",
-        padding: "15px",
+        padding: "10px",
+        backgroundColor: "#193D62",
+        color: "white",
       }}
     >
-      Student Helper | University of California, Irvine
+      Student Helper, Inc | University of California, Irvine
     </div>
   );
 };

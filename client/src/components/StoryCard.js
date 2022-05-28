@@ -3,23 +3,19 @@ import { Card, Icon } from "semantic-ui-react";
 import "../App.css";
 
 const StoryCard = (props) => {
-  const [addrtype, setAddrtype] = useState([
+  const [statusType, setStatusType] = useState([
     "<status>",
     "TODO",
     "IN_PROGRESS",
     "IN_REVIEW",
     "COMPLETED",
   ]);
-  const Add = addrtype.map((Add) => Add);
-  const handleAddrTypeChange = (e) => {
+  const [devLen, setDevLen] = useState(props.all_dev_len);
+  const Status = statusType.map((Status) => Status);
+  const handleStatusTypeChange = (e) => {
     let storyId = e.target.parentElement.id;
-
     let storyJsonData;
-
-    let updatedStoryStatus = addrtype[e.target.value];
-    console.log(addrtype[e.target.value] + " " + storyId);
-    console.log(updatedStoryStatus);
-    console.log(storyJsonData);
+    let updatedStoryStatus = statusType[e.target.value];
 
     fetch(`http://localhost:5001/stories/${storyId}`).then((response) =>
       response.json().then((result) => {
@@ -42,37 +38,60 @@ const StoryCard = (props) => {
             })
         );
       })
-    );    
-    
+    );
+  };
+
+  const [dev, setDev] = useState(props.all_developers);
+  const Devs = dev.map((Dev) => Dev);
+  const handleDevNameChange = (e) => {
+    let storyId = e.target.id;
+    let developerJsonData, storyJsonData, updatedDeveloperId;
+    let updatedDevName = dev[e.target.value];
+    console.log("storyId in " + storyId + " " + updatedDevName);
+
+    fetch(`http://localhost:5001/developer/${updatedDevName}`).then(
+      (response) =>
+        response.json().then((result) => {
+          developerJsonData = result;
+          updatedDeveloperId = developerJsonData.developer_id;
+
+          fetch(`http://localhost:5001/stories/${storyId}`).then((response) =>
+            response.json().then((result2) => {
+              storyJsonData = result2;
+              console.log(storyJsonData);
+              const requestOptions = {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  developer_id: updatedDeveloperId,
+                  project_id: storyJsonData.project_id,
+                }),
+              };
+              console.log("updating dev " + storyId);
+              console.log(requestOptions);
+              fetch(
+                `http://localhost:5001/stories/${storyId}/developer`,
+                requestOptions
+              ).then((response) =>
+                response.json().then((result) => {
+                  console.log(result);
+                  props.update_story_handler();
+                })
+              );
+            })
+          );
+        })
+    );
   };
 
   return (
     <Card style={props.card_style}>
-      <Card.Content>
+      <Card.Content style={props.text_style}>
         <Card.Description content={props.content} style={props.text_style} />
         <br />
-        <div
-          style={{ width: "50%", float: "right", fontSize: "13px" }}
-          id={props.story_id}
-        >
-          <select
-            onChange={(e) => handleAddrTypeChange(e)}
-            className="custom-select"
-          >
-            {Add.map((address, key) => (
-              <option key={key} value={key}>
-                {address}
-              </option>
-            ))}
-          </select>
-        </div>
-      </Card.Content>
+        <Icon name="user" />
 
-      <Card.Content extra>
-        <a style={props.text_style}>
-          <Icon name="user" />
-          {props.developer_name}
-        </a>
+        {props.developer_name}
 
         <a
           style={
@@ -106,6 +125,50 @@ const StoryCard = (props) => {
           <Icon name="clock outline" />
           {props.story_points}
         </a>
+      </Card.Content>
+
+      <Card.Content extra>
+        <a style={props.text_style}>
+          <select
+            style={{
+              width: "45%",
+              fontSize: "12px",
+              padding: "7px",
+              backgroundColor: props.bg_color,
+              color: props.text_color,
+            }}
+            id={props.story_id}
+            onChange={(e) => handleDevNameChange(e)}
+          >
+            {Devs.map((dev, key) => (
+              <option key={key} value={key}>
+                {dev}
+              </option>
+            ))}
+          </select>
+        </a>
+
+        <div
+          style={{ width: "50%", float: "right", fontSize: "13px" }}
+          id={props.story_id}
+        >
+          <select
+            onChange={(e) => handleStatusTypeChange(e)}
+            style={{
+              width: "100%",
+              fontSize: "12px",
+              padding: "7px",
+              backgroundColor: props.bg_color,
+              color: props.text_color,
+            }}
+          >
+            {Status.map((status, key) => (
+              <option key={key} value={key}>
+                {status}
+              </option>
+            ))}
+          </select>
+        </div>
       </Card.Content>
     </Card>
   );
