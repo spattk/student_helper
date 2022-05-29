@@ -209,11 +209,11 @@ app.post("/projects", async(req,res) => {
 
 app.post("/users",async(req,res) => {
     try{
-        const {user_id,username,password,email,first_name,last_name,phone,role,auth_token,department}  = await req.body;
+        const {username,password,email,first_name,last_name,phone,role,department}  = await req.body;
 
         const newUser = await pool.query(
-            "INSERT INTO users (user_id,username,password,email,first_name,last_name,phone,role,auth_token,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *", 
-            [user_id,username,password,email,first_name,last_name,phone,role,auth_token,department]
+            "INSERT INTO users (username,password,email,first_name,last_name,phone,role,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *", 
+            [username,password,email,first_name,last_name,phone,role,department]
         );
 
         res.json(newStory.rows[0]);
@@ -242,9 +242,14 @@ app.post("/stories",async(req,res) => {
         const {story_id,story_name,story_description,story_points,status,project_id,developer_id}  = await req.body;
 
         const newStory = await pool.query(
-            "INSERT INTO stories (story_id,story_name,story_description,story_points,status) VALUES($1,$2,$3,$4,$5) RETURNING *", 
-            [story_id,story_name,story_description,story_points,status]
+            "INSERT INTO stories (story_name,story_description,story_points,status) VALUES($1,$2,$3,$4) RETURNING *", 
+            [story_name,story_description,story_points,status]
         );
+
+        const newProjectStoryMapping = await pool.query(
+            "INSERT INTO projectstorymapping (project_id, story_id, developer_id) VALUES($1,$2,$3) RETURNING *",
+            [project_id,newStory.rows[0].story_id,developer_id]
+        )
 
         res.json(newStory.rows[0]);
     } catch (err) {

@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Card, Container, Grid, Header, Icon, Modal, Form } from "semantic-ui-react";
+import {
+  Button,
+  Card,
+  Container,
+  Grid,
+  Header,
+  Icon,
+  Modal,
+  Form,
+} from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
@@ -80,24 +89,47 @@ const Kanban = (props) => {
     getProjectDetails();
   }, [id]);
 
-  const [open, setOpen] = React.useState(false)
-  const [formState, setFormState] = useState({formId:'', formName:'', formDesc:'', formPoints: '', formStatus:'', formDeveloper:''});
+  const [open, setOpen] = React.useState(false);
+  const [formState, setFormState] = useState({
+    formName: "",
+    formDesc: "",
+    formPoints: "",
+    formStatus: "",
+    formDeveloper: "",
+  });
   const submit = () => {
-    fetch('http://localhost:5001/stories', {
-      method: 'POST',
+    fetch("http://localhost:5001/stories", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({story_id: formState.formId, story_name : formState.formName, story_description: formState.formDesc, story_points: formState.formPoints, status: formState.formStatus, project_id: id, developer_id: formState.formDeveloper})
-    }).then(res => res.json())
-      .then(res => {console.log(res);getProjectDetails()});
-    setOpen(false)
-  }
-  
+      body: JSON.stringify({
+        story_name: formState.formName,
+        story_description: formState.formDesc,
+        story_points: formState.formPoints,
+        status: formState.formStatus,
+        project_id: id,
+        developer_id: formState.formDeveloper,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        getProjectDetails();
+        setFormState({
+          formName: "",
+          formDesc: "",
+          formPoints: "",
+          formStatus: "",
+          formDeveloper: "",
+        });
+      });
+    setOpen(false);
+  };
 
   const handleChange = (e) => {
-    setFormState({...formState, [e.target.name]: e.target.value})
+    setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   return (
@@ -117,60 +149,85 @@ const Kanban = (props) => {
                 marginLeft: "-20px",
                 marginRight: "10px",
                 padding: "10px",
-                borderRadius: '10px'
+                borderRadius: "10px",
               }}
             >
               {project.project_name} Kanban Board
               <Modal
-              closeIcon
-              open={open}
-              trigger={<Button style={{float: 'right', backgroundColor: "#193D62", color: "white"}}>Add Story</Button>}
-              onClose={() => setOpen(false)}
-              onOpen={() => setOpen(true)}
-            >
-              <Header content='Add New Story' />
-              <Modal.Content scrolling>
-                <Form>
-                  <Form.Field>
-                    <label>ID</label>
-                    <input name='formId' placeholder='ID' value={formState.formId}
-                      onChange={handleChange} />
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Name</label>
-                    <input name='formName' placeholder='Name' value={formState.formName}
-                      onChange={handleChange} />
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Description</label>
-                    <input name='formDesc' placeholder='Description' value={formState.formDesc}
-                      onChange={handleChange} />
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Points</label>
-                    <input name='formPoints' placeholder='Points' value={formState.formPoints}
-                      onChange={handleChange}/>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Status</label>
-                    <input name='formStatus' placeholder='Status' value={formState.formStatus}
-                      onChange={handleChange}/>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Developer ID</label>
-                    <input name='formDeveloper' placeholder='Developer ID' value={formState.formDeveloper}
-                      onChange={handleChange}/>
-                  </Form.Field>
-                </Form>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button color='green' onClick={submit}>
-                  <Icon name='checkmark' /> Submit
-                </Button>
-              </Modal.Actions>
-            </Modal>
+                closeIcon
+                open={open}
+                trigger={
+                  <Button
+                    style={{
+                      float: "right",
+                      backgroundColor: "#193D62",
+                      color: "white",
+                    }}
+                  >
+                    Add Story
+                  </Button>
+                }
+                onClose={() => setOpen(false)}
+                onOpen={() => setOpen(true)}
+              >
+                <Header content="Add New Story" />
+                <Modal.Content scrolling>
+                  <Form>
+                    <Form.Field>
+                      <label>Name</label>
+                      <input
+                        name="formName"
+                        placeholder="Name"
+                        value={formState.formName}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Description</label>
+                      <input
+                        name="formDesc"
+                        placeholder="Description"
+                        value={formState.formDesc}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Points</label>
+                      <input
+                        name="formPoints"
+                        placeholder="Points"
+                        value={formState.formPoints}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Status</label>
+                      <input
+                        name="formStatus"
+                        placeholder="Status"
+                        value={formState.formStatus}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Developer ID</label>
+                      <input
+                        name="formDeveloper"
+                        placeholder="Developer ID"
+                        value={formState.formDeveloper}
+                        onChange={handleChange}
+                      />
+                    </Form.Field>
+                  </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button color="green" onClick={submit}>
+                    <Icon name="checkmark" /> Submit
+                  </Button>
+                </Modal.Actions>
+              </Modal>
             </h2>
-            
+
             <Grid>
               <Grid.Row>
                 <Grid.Column width={4}>

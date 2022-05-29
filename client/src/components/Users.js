@@ -35,7 +35,6 @@ const Users = () => {
 
   const [open, setOpen] = React.useState(false);
   const [formState, setFormState] = useState({
-    formId: "",
     formName: "",
     formPassword: "",
     formEmail: "",
@@ -43,7 +42,6 @@ const Users = () => {
     formLName: "",
     formPhone: "",
     formRole: "",
-    formAuthToken: "",
     formDepartment: "",
   });
   const submit = () => {
@@ -54,7 +52,6 @@ const Users = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: formState.formId,
         username: formState.formName,
         password: formState.formPassword,
         email: formState.formEmail,
@@ -62,7 +59,6 @@ const Users = () => {
         last_name: formState.formLName,
         phone: formState.formPhone,
         role: formState.formRole,
-        auth_token: formState.formAuthToken,
         department: formState.formDepartment,
       }),
     })
@@ -105,15 +101,6 @@ const Users = () => {
                 <Header content="Add New Student" />
                 <Modal.Content scrolling>
                   <Form>
-                    <Form.Field>
-                      <label>User ID</label>
-                      <input
-                        name="formId"
-                        placeholder="ID"
-                        value={formState.formId}
-                        onChange={handleChange}
-                      />
-                    </Form.Field>
                     <Form.Field>
                       <label>Username</label>
                       <input
@@ -174,15 +161,6 @@ const Users = () => {
                         name="formRole"
                         placeholder="Role"
                         value={formState.formRole}
-                        onChange={handleChange}
-                      />
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Authorization Token</label>
-                      <input
-                        name="formAuthToken"
-                        placeholder="Authorization Token"
-                        value={formState.formAuthToken}
                         onChange={handleChange}
                       />
                     </Form.Field>
