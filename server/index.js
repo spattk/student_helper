@@ -331,6 +331,18 @@ app.put("/stories/:id", async (req, res) => {
     }
 })
 
+app.put("/stories/:id/developer", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const {developer_id, project_id} = await req.body;
+        const updateStory = await pool.query("UPDATE projectstorymapping SET developer_id = $1 WHERE story_id = $2 and project_id = $3",
+        [developer_id, id, project_id]
+        ); 
+        res.json(updateStory.rowCount + " rows updated");
+    } catch(err) {
+        console.error(err.message);
+    }
+})
 
 app.put("/projects/:id", async (req, res) => {
     try {
