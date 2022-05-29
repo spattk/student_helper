@@ -7,11 +7,11 @@ import RecentProjects from "./RecentProjects";
 import VerticalNavigation from "./VerticalNavigation";
 import background from "../img/12226.jpeg";
 
-function Dashboard() {
+function Dashboard(props) {
   return (
     <Container fluid={true} >
       <div style={{ backgroundImage: `url(${background})` }}>
-      <MenuHeader />
+      <MenuHeader setToken={props.setToken} />
       <Grid>
         <Grid.Row>
           <Grid.Column width={3}>

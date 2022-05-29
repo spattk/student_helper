@@ -24,7 +24,7 @@ app.use('/login', (req, res) => {
         const user = pool.query("select * from users where username=$1 and password=$2",[
             username,password
             ]).then(result=>{
-                console.log('what we have ');
+            
                 console.log(result.rows[0]);
                 if(result.rows[0] != undefined){
                     console.log('in');

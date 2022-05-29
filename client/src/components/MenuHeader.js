@@ -6,6 +6,12 @@ export default class MenuHeader extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+  handleLogout = () => {
+    console.log("Logging out");
+    let token='not approved'
+    this.props.setToken(token)
+  }
+
   render() {
     const { activeItem } = this.state;
 
@@ -33,7 +39,7 @@ export default class MenuHeader extends Component {
               <Menu.Item
                 name="logout"
                 active={activeItem === "logout"}
-                onClick={this.handleItemClick}
+                onClick={this.handleLogout}
                 style={{color:"white", fontWeight: "bold"}}
               />
             </Menu.Menu>
