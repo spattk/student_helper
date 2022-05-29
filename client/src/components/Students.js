@@ -54,7 +54,6 @@ const Students = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_id: formState.formId,
         username: formState.formName,
         password: formState.formPassword,
         email: formState.formEmail,
@@ -62,7 +61,6 @@ const Students = () => {
         last_name: formState.formLName,
         phone: formState.formPhone,
         role: formState.formRole,
-        auth_token: formState.formAuthToken,
         department: formState.formDepartment,
       }),
     })
@@ -87,14 +85,19 @@ const Students = () => {
             <VerticalNavigation />
           </Grid.Column>
           <Grid.Column width={13}>
-            <div >
+            <div>
               <Modal
                 closeIcon
                 open={open}
                 trigger={
                   <Button
-                    
-                    style={{ float: "right", marginTop: "10px", marginRight: "10px", backgroundColor: "#193D62", color: "white" }}
+                    style={{
+                      float: "right",
+                      marginTop: "10px",
+                      marginRight: "10px",
+                      backgroundColor: "#193D62",
+                      color: "white",
+                    }}
                   >
                     Add Student
                   </Button>
@@ -105,15 +108,6 @@ const Students = () => {
                 <Header content="Add New Student" />
                 <Modal.Content scrolling>
                   <Form>
-                    <Form.Field>
-                      <label>User ID</label>
-                      <input
-                        name="formId"
-                        placeholder="ID"
-                        value={formState.formId}
-                        onChange={handleChange}
-                      />
-                    </Form.Field>
                     <Form.Field>
                       <label>Username</label>
                       <input
@@ -178,15 +172,6 @@ const Students = () => {
                       />
                     </Form.Field>
                     <Form.Field>
-                      <label>Authorization Token</label>
-                      <input
-                        name="formAuthToken"
-                        placeholder="Authorization Token"
-                        value={formState.formAuthToken}
-                        onChange={handleChange}
-                      />
-                    </Form.Field>
-                    <Form.Field>
                       <label>Department</label>
                       <input
                         name="formDepartment"
@@ -203,12 +188,18 @@ const Students = () => {
                   </Button>
                 </Modal.Actions>
               </Modal>
-              <div style={{ textAlign: "center", padding: "10px", marginTop: "10px",
-                textAlign: "center",
-                border: "1px solid black",
-                marginLeft: "10px",
-                padding: "10px",
-                borderRadius: '10px' }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "10px",
+                  marginTop: "10px",
+                  textAlign: "center",
+                  border: "1px solid black",
+                  marginLeft: "10px",
+                  padding: "10px",
+                  borderRadius: "10px",
+                }}
+              >
                 <h2>Registered Students</h2>
               </div>
               <div style={{ margin: "10px", marginBottom: "70px" }}>
