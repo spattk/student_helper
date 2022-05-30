@@ -1,25 +1,17 @@
-import React, { createContext, useState } from "react";
-import { BrowserRouter, Switch, Route, Routes } from "react-router-dom";
+import React, { createContext } from "react";
 import "./App.css";
-import Dashboard from "./components/Dashboard";
-import Kanban from "./components/Kanban";
-import Projects from "./components/Projects";
-import Students from "./components/Students";
-import Login from './components/Login';
-import useToken from './useToken';
-import Users from "./components/Users";
+import Login from "./components/Login";
 import Views from "./components/Views";
+import useToken from "./useToken";
 
 export const UserContext = createContext();
 
 function App() {
   const { token, setToken } = useToken();
-  if (token == undefined || !token) {
-    return <Login setToken={setToken} />
+  if (token == "not approved" || !token) {
+    return <Login setToken={setToken} />;
   }
-  return (
-   <Views setToken={setToken} /> 
-  );
+  return <Views token={token} setToken={setToken} />;
 }
 
 export default App;

@@ -1,51 +1,51 @@
-import React, { Component } from "react";
+import React from "react";
 import { Input, Menu, Segment } from "semantic-ui-react";
 
-export default class MenuHeader extends Component {
-  state = { activeItem: "home" };
+const MenuHeader = (props) => {
+  // const [showLogout, setShowLogout] = useState(true)
+  // console.log("token " + props.token);
+  // if(props.token != undefined && props.token == 'approved'){
+  //   setShowLogout(true);
+  // }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
-  handleLogout = () => {
+  const handleLogout = () => {
     console.log("Logging out");
-    let token='not approved'
-    this.props.setToken(token)
-  }
+    let token = "not approved";
+    // setShowLogout(false);
+    props.setToken(token);
+  };
 
-  render() {
-    const { activeItem } = this.state;
+  return (
+    <div>
+      <Segment style={{ backgroundColor: "#193D62" }}>
+        <Menu style={{ backgroundColor: "#193D62", border: "1px solid white" }}>
+          <Menu.Item
+            name="student helper"
+            style={{ color: "white", fontWeight: "bold" }}
+          />
+          <Menu.Item
+            name="home"
+            style={{ color: "white", fontWeight: "bold" }}
+          />
 
-    return (
-      <div>
-        <Segment style={{backgroundColor: '#193D62'}}>
-          <Menu style={{backgroundColor: '#193D62', border:'1px solid white'}}>
-            <Menu.Item
-              name="student helper"
-              active={activeItem === "student helper"}
-              onClick={this.handleItemClick}
-              style={{color:"white", fontWeight: "bold"}}
-            />
-            <Menu.Item
-              name="home"
-              active={activeItem === "home"}
-              onClick={this.handleItemClick}
-              style={{color:"white", fontWeight: "bold"}}
-            />
-
-            <Menu.Menu position="right">
-              <Menu.Item>
-                <Input icon="search" placeholder="Search..." />
-              </Menu.Item>
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Input icon="search" placeholder="Search..." />
+            </Menu.Item>
+            {props.token == "approved" ? (
               <Menu.Item
-                name="logout"
-                active={activeItem === "logout"}
-                onClick={this.handleLogout}
-                style={{color:"white", fontWeight: "bold"}}
+                name="session logout"
+                onClick={handleLogout}
+                style={{ color: "white", fontWeight: "bold" }}
               />
-            </Menu.Menu>
-          </Menu>
-        </Segment>
-      </div>
-    );
-  }
-}
+            ) : (
+              <div></div>
+            )}
+          </Menu.Menu>
+        </Menu>
+      </Segment>
+    </div>
+  );
+};
+
+export default MenuHeader;
