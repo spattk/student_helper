@@ -7,7 +7,6 @@ export default class MenuExampleVerticalPointing extends Component {
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
-    console.log(e + " @@@@@@ " + name);
   };
 
   render() {

@@ -23,7 +23,6 @@ const Students = (props) => {
       const response = await fetch("http://localhost:5001/users/students");
       const jsonData = await response.json();
       setAllStudents(jsonData);
-      console.log(jsonData);
     } catch (err) {
       console.log(err);
     }

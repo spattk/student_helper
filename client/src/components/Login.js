@@ -7,7 +7,7 @@ import MenuHeader from "./MenuHeader";
 import VerticalNavigation from "./VerticalNavigation";
 
 async function loginUser(credentials) {
-  return fetch("http://localhost:5001/login", {
+  return await fetch("http://localhost:5001/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

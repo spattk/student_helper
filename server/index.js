@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
-
 const bcrypt = require("bcrypt");
 
 //middleware
@@ -11,33 +10,40 @@ app.use(express.json()); //req.body
 
 //ROUTES//
 
-app.use("/login", (req, res) => {
+app.use("/login", async (req, res) => {
   try {
     console.log(req.body);
     const { username, password } = req.body;
     console.log(username);
     console.log(password);
-    const user = pool
-      .query("select * from users where username=$1 and password=$2", [
-        username,
+    const user = await pool.query("select * from users where username=$1", [
+      username,
+    ]);
+    if (
+      user != undefined &&
+      user.rows != undefined &&
+      user.rows[0] != undefined
+    ) {
+      let isValidPassword = await bcrypt.compare(
         password,
-      ])
-      .then((result) => {
-        if (result.rows[0] != undefined) {
-          console.log("in");
-          res.send({
-            token: "approved",
-          });
-        } else {
-          console.log("out");
-          res.send({
-            token: "not approved",
-          });
-        }
-      });
-    //  const user = myfunction(username,password).then(res=>console.log(res));
+        user.rows[0].password
+      );
+      if (isValidPassword) {
+        console.log("in");
+        res.send({
+          token: "approved",
+        });
+      } else {
+        console.log("out");
+        res.send({
+          token: "not approved",
+        });
+      }
+    } else {
+      console.log("NOT ");
+    }
   } catch (err) {
-    console.log("some rr ");
+    console.log("some rr " + err);
   }
 });
 
@@ -242,11 +248,14 @@ app.post("/users", async (req, res) => {
       department,
     } = await req.body;
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = await pool.query(
       "INSERT INTO users (username,password,email,first_name,last_name,phone,role,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
       [
         username,
-        password,
+        hashedPassword,
         email,
         first_name,
         last_name,
