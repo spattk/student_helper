@@ -6,10 +6,10 @@ import MenuHeader from "./MenuHeader";
 import RecentProjects from "./RecentProjects";
 import VerticalNavigation from "./VerticalNavigation";
 
-function Projects() {
+function Projects(props) {
   return (
     <Container fluid={true}>
-      <MenuHeader />
+      <MenuHeader setToken={props.setToken} />
       <Grid>
         <Grid.Row>
           <Grid.Column width={3}>

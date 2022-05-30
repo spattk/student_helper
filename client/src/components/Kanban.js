@@ -134,7 +134,7 @@ const Kanban = (props) => {
 
   return (
     <Container fluid={true}>
-      <MenuHeader />
+      <MenuHeader setToken={props.setToken}  />
       <Grid>
         <Grid.Row>
           <Grid.Column width={3}>

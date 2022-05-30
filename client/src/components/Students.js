@@ -15,7 +15,7 @@ import MenuHeader from "./MenuHeader";
 import Student from "./Student";
 import VerticalNavigation from "./VerticalNavigation";
 
-const Students = () => {
+const Students = (props) => {
   const [allStudents, setAllStudents] = useState([]);
 
   const getAllStudents = async () => {
@@ -78,7 +78,7 @@ const Students = () => {
 
   return (
     <Container fluid={true}>
-      <MenuHeader />
+      <MenuHeader setToken={props.setToken} />
       <Grid>
         <Grid.Row>
           <Grid.Column width={3}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Item, Form, Button, Modal, Icon, Header } from "semantic-ui-react";
 import Project from "./Project";
 
-const RecentProjects = () => {
+const RecentProjects = (props) => {
   const [recentProjects, setRecentProjects] = useState([]);
 
   const getRecentProjects = async () => {

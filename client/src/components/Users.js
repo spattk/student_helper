@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
+  Button,
   Card,
   Container,
-  Grid,
-  Modal,
-  Header,
-  Button,
   Form,
+  Grid,
+  Header,
   Icon,
+  Modal,
 } from "semantic-ui-react";
 import "../App.css";
 import Footer from "./Footer";
@@ -15,7 +15,7 @@ import MenuHeader from "./MenuHeader";
 import User from "./User";
 import VerticalNavigation from "./VerticalNavigation";
 
-const Users = () => {
+const Users = (props) => {
   const [allUsers, setAllUsers] = useState([]);
 
   const getAllStudents = async () => {
@@ -76,7 +76,7 @@ const Users = () => {
 
   return (
     <Container fluid={true}>
-      <MenuHeader />
+      <MenuHeader setToken={props.setToken} />
       <Grid>
         <Grid.Row>
           <Grid.Column width={3}>
@@ -89,8 +89,13 @@ const Users = () => {
                 open={open}
                 trigger={
                   <Button
-                    
-                    style={{ float: "right", marginTop: "10px", marginRight: "10px", backgroundColor: "#193D62", color: "white" }}
+                    style={{
+                      float: "right",
+                      marginTop: "10px",
+                      marginRight: "10px",
+                      backgroundColor: "#193D62",
+                      color: "white",
+                    }}
                   >
                     Add User
                   </Button>
@@ -181,12 +186,18 @@ const Users = () => {
                   </Button>
                 </Modal.Actions>
               </Modal>
-              <div style={{ textAlign: "center", padding: '10px', marginTop: "10px",
-                textAlign: "center",
-                border: "1px solid black",
-                padding: "10px",
-                marginLeft: "10px",
-                borderRadius: '10px' }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "10px",
+                  marginTop: "10px",
+                  textAlign: "center",
+                  border: "1px solid black",
+                  padding: "10px",
+                  marginLeft: "10px",
+                  borderRadius: "10px",
+                }}
+              >
                 <h2>All Users</h2>
               </div>
               <div style={{ margin: "10px", marginBottom: "70px" }}>
