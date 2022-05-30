@@ -34,8 +34,9 @@ const Login = (props) => {
       username,
       password,
     });
+    console.log("login page");
     console.log(token);
-    if (token != "approved") {
+    if (!token.auth) {
       isLogInSuccess = false;
       setErrorText("Invalid Username or Password !!!");
     } else {

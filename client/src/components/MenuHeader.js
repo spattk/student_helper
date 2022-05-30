@@ -2,16 +2,8 @@ import React from "react";
 import { Input, Menu, Segment } from "semantic-ui-react";
 
 const MenuHeader = (props) => {
-  // const [showLogout, setShowLogout] = useState(true)
-  // console.log("token " + props.token);
-  // if(props.token != undefined && props.token == 'approved'){
-  //   setShowLogout(true);
-  // }
-
   const handleLogout = () => {
-    console.log("Logging out");
-    let token = "not approved";
-    // setShowLogout(false);
+    let token = { auth: false };
     props.setToken(token);
   };
 
@@ -32,7 +24,7 @@ const MenuHeader = (props) => {
             <Menu.Item>
               <Input icon="search" placeholder="Search..." />
             </Menu.Item>
-            {props.token == "approved" ? (
+            {props.token ? (
               <Menu.Item
                 name="session logout"
                 onClick={handleLogout}

@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //middleware
 app.use(cors());
@@ -14,36 +15,44 @@ app.use("/login", async (req, res) => {
   try {
     console.log(req.body);
     const { username, password } = req.body;
-    console.log(username);
-    console.log(password);
-    const user = await pool.query("select * from users where username=$1", [
+    const result = await pool.query("select * from users where username=$1", [
       username,
     ]);
     if (
-      user != undefined &&
-      user.rows != undefined &&
-      user.rows[0] != undefined
+      result != undefined &&
+      result.rows != undefined &&
+      result.rows[0] != undefined
     ) {
       let isValidPassword = await bcrypt.compare(
         password,
-        user.rows[0].password
+        result.rows[0].password
       );
       if (isValidPassword) {
-        console.log("in");
+        const id = result.rows[0].user_id;
+        const token = jwt.sign({ id }, "jwtSecret", {
+          expiresIn: 300,
+        });
+        // req.session.user = result;
         res.send({
-          token: "approved",
+          auth: true,
+          token: token,
+          result: result.rows[0],
         });
       } else {
-        console.log("out");
         res.send({
-          token: "not approved",
+          auth: false,
         });
       }
     } else {
-      console.log("NOT ");
+      res.send({
+        auth: false,
+      });
     }
   } catch (err) {
-    console.log("some rr " + err);
+    console.log("some error " + err);
+    res.send({
+      auth: false,
+    });
   }
 });
 
