@@ -76,7 +76,7 @@ const Users = (props) => {
 
   return (
     <Container fluid={true}>
-      <MenuHeader setToken={props.setToken} />
+      <MenuHeader token={props.token} setToken={props.setToken} />
       <Grid>
         <Grid.Row>
           <Grid.Column width={3}>
