@@ -474,6 +474,19 @@ app.get("/projects/:id/developers", async (req, res) => {
   }
 });
 
+app.get("/groups/members/:id", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const users = await pool.query(
+            "select username as developer_name from users u where user_id  in (select user_id from studentgroupmapping s where group_id = $1)",
+            [id]
+        );
+        res.json(users.rows);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
+
 app.listen(5001, () => {
   console.log("server has started on port 5001");
 });
