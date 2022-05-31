@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  Card,
-  Container,
-  Grid,
-  Modal,
-  Header,
-  Button,
-  Form,
-  Icon,
+  Button, Card,
+  Container, Form, Grid, Header, Icon, Modal
 } from "semantic-ui-react";
 import "../css/App.css";
 import Footer from "./Footer";

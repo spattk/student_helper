@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Grid } from "semantic-ui-react";
 import "../css/App.css";
-import Footer from "./Footer";
 import "../css/Login.css";
+import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
 import VerticalNavigation from "./VerticalNavigation";
 
