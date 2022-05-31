@@ -483,7 +483,6 @@ app.get("/projects/:id/developers", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 //TEST JWT
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
@@ -506,7 +505,8 @@ const verifyJWT = (req, res, next) => {
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
   res.send("Yo Auth");
-=======
+});
+
 app.get("/groups/members/:id", async (req,res) => {
     try{
         const {id} = req.params;
@@ -518,7 +518,6 @@ app.get("/groups/members/:id", async (req,res) => {
     } catch(err) {
         console.error(err.message);
     }
->>>>>>> a30e847492ea8aecc32d97901d8468d0907862ea
 });
 
 app.listen(5001, () => {
