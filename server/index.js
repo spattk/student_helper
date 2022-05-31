@@ -76,10 +76,11 @@ app.get("/users/students", async (req, res) => {
   }
 });
 
-app.get("/users/students", async (req, res) => {
+
+app.get("/users/professors", async (req, res) => {
   try {
     const allStudents = await pool.query(
-      "select * from users where role='student'"
+      "select * from users where lower(role)='professor'"
     );
     res.json(allStudents.rows);
   } catch (err) {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import { Menu, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { Container, Menu } from "semantic-ui-react";
 
 export default class MenuExampleVerticalPointing extends Component {
   state = { activeItem: "home" };
@@ -13,23 +13,14 @@ export default class MenuExampleVerticalPointing extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Container>
-        <Menu
-          pointing
-          vertical
-          style={{ backgroundColor: "#F07C41", border: "0.5px solid #193D62" }}
-        >
+      <Container >
+        <Menu pointing vertical style={{backgroundColor:'#F07C41', border: "0.5px solid #193D62"}}>
           <Link to="/dashboard">
             <Menu.Item
               name="dashboard"
               active={activeItem === "dashboard"}
               onClick={this.handleItemClick}
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                fontSize: "15px",
-                border: "0.5px solid #193D62",
-              }}
+              style={{color:"white", fontWeight:"bold", fontSize:'15px', border: "0.5px solid #193D62"}}
             />
           </Link>
 
@@ -38,11 +29,7 @@ export default class MenuExampleVerticalPointing extends Component {
               name="projects"
               active={activeItem === "projects"}
               onClick={this.handleItemClick}
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                border: "0.5px solid #193D62",
-              }}
+              style={{color:"white", fontWeight:"bold", border: "0.5px solid #193D62"}}
             />
           </Link>
 
@@ -51,11 +38,7 @@ export default class MenuExampleVerticalPointing extends Component {
               name="groups"
               active={activeItem === "groups"}
               onClick={this.handleItemClick}
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                border: "0.5px solid #193D62",
-              }}
+              style={{color:"white", fontWeight:"bold", border: "0.5px solid #193D62"}}
             />
           </Link>
 
@@ -64,11 +47,16 @@ export default class MenuExampleVerticalPointing extends Component {
               name="students"
               active={activeItem === "students"}
               onClick={this.handleItemClick}
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                border: "0.5px solid #193D62",
-              }}
+              style={{color:"white", fontWeight:"bold", border: "0.5px solid #193D62"}}
+            />
+          </Link>
+          
+          <Link to="/professors">
+            <Menu.Item
+              name="professors"
+              active={activeItem === "professors"}
+              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold", border: "0.5px solid #193D62"}}
             />
           </Link>
 
@@ -77,13 +65,10 @@ export default class MenuExampleVerticalPointing extends Component {
               name="users"
               active={activeItem === "users"}
               onClick={this.handleItemClick}
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                border: "0.5px solid #193D62",
-              }}
+              style={{color:"white", fontWeight:"bold", border: "0.5px solid #193D62"}}
             />
           </Link>
+
         </Menu>
       </Container>
     );
