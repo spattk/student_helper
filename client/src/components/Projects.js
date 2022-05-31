@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Grid } from "semantic-ui-react";
-import "../App.css";
+import "../css/App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
 import RecentProjects from "./RecentProjects";

@@ -8,7 +8,7 @@ const Footer = () => {
         position: "fixed",
         bottom: "0",
         fontWeight: "bold",
-        width: "100%",
+        width: "98%",
         padding: "10px",
         backgroundColor: "#193D62",
         color: "white",
