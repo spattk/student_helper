@@ -42,6 +42,7 @@ const Login = (props) => {
     } else {
       setErrorText(errorText);
       isLogInSuccess = true;
+      localStorage.setItem("authToken", token.token);
     }
     props.setToken(token);
   };

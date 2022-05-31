@@ -4,6 +4,7 @@ const cors = require("cors");
 const pool = require("./db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const fetch = require("node-fetch");
 
 //middleware
 app.use(cors());
@@ -13,7 +14,6 @@ app.use(express.json()); //req.body
 
 app.use("/login", async (req, res) => {
   try {
-    console.log(req.body);
     const { username, password } = req.body;
     const result = await pool.query("select * from users where username=$1", [
       username,
@@ -163,6 +163,15 @@ app.get("/groups/professor/:id", async (req, res) => {
 
 app.get("/stories", async (req, res) => {
   try {
+    const authResponse = await fetch("http://localhost:5001/isUserAuth", {
+      headers: {
+        "x-access-token": req.headers["x-access-token"],
+      },
+    });
+    const authResult = await authResponse.json();
+    if (!authResult.auth) {
+      return res.status(403).json({ message: "Invalid Token" });
+    }
     const allStories = await pool.query("select * from stories");
     res.json(allStories.rows);
   } catch (err) {
@@ -472,6 +481,30 @@ app.get("/projects/:id/developers", async (req, res) => {
   } catch (err) {
     console.error(err.message);
   }
+});
+
+//TEST JWT
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    res.send({ auth: false, message: "No Token" });
+  } else {
+    jwt.verify(token, "jwtSecret", (err, decoded) => {
+      if (err) {
+        console.log(err);
+        res.send({ auth: false, message: "Invalid token" });
+      } else {
+        req.userId = decoded.id;
+        res.send({ auth: true, message: "Yo Auth" });
+        console.log(decoded.id);
+        next();
+      }
+    });
+  }
+};
+
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.send("Yo Auth");
 });
 
 app.listen(5001, () => {

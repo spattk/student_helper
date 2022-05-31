@@ -5,6 +5,19 @@ const MenuHeader = (props) => {
   const handleLogout = () => {
     let token = { auth: false };
     props.setToken(token);
+    localStorage.removeItem("authToken");
+  };
+
+  const authCheck = async () => {
+    let currToken = localStorage.getItem("authToken");
+    // console.log("^^^^" + currToken);
+    const response = await fetch("http://localhost:5001/isUserAuth", {
+      headers: {
+        "x-access-token": currToken,
+      },
+    });
+    const res = await response.json();
+    console.log(res);
   };
 
   return (
@@ -18,6 +31,11 @@ const MenuHeader = (props) => {
           <Menu.Item
             name="home"
             style={{ color: "white", fontWeight: "bold" }}
+          />
+          <Menu.Item
+            name="test auth"
+            style={{ color: "white", fontWeight: "bold" }}
+            onClick={authCheck}
           />
 
           <Menu.Menu position="right">
