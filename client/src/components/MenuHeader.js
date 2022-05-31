@@ -2,17 +2,22 @@ import React from "react";
 import { Input, Menu, Segment } from "semantic-ui-react";
 
 const MenuHeader = (props) => {
-  // const [showLogout, setShowLogout] = useState(true)
-  // console.log("token " + props.token);
-  // if(props.token != undefined && props.token == 'approved'){
-  //   setShowLogout(true);
-  // }
-
   const handleLogout = () => {
-    console.log("Logging out");
-    let token = "not approved";
-    // setShowLogout(false);
+    let token = { auth: false };
     props.setToken(token);
+    localStorage.removeItem("authToken");
+  };
+
+  const authCheck = async () => {
+    let currToken = localStorage.getItem("authToken");
+    // console.log("^^^^" + currToken);
+    const response = await fetch("http://localhost:5001/isUserAuth", {
+      headers: {
+        "x-access-token": currToken,
+      },
+    });
+    const res = await response.json();
+    console.log(res);
   };
 
   return (
@@ -27,12 +32,17 @@ const MenuHeader = (props) => {
             name="home"
             style={{ color: "white", fontWeight: "bold" }}
           />
+          <Menu.Item
+            name="test auth"
+            style={{ color: "white", fontWeight: "bold" }}
+            onClick={authCheck}
+          />
 
           <Menu.Menu position="right">
             <Menu.Item>
               <Input icon="search" placeholder="Search..." />
             </Menu.Item>
-            {props.token == "approved" ? (
+            {props.token ? (
               <Menu.Item
                 name="session logout"
                 onClick={handleLogout}

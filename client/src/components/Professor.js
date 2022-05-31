@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 
-const User = (props) => {
+const Professor = (props) => {
   return (
     <Card style={{ maxWidth: "250px", border: "1px solid #193D62" }}>
       <Card.Content style={{ backgroundColor: "#E6E6E6" }}>
@@ -22,4 +22,4 @@ const User = (props) => {
   );
 };
 
-export default User;
+export default Professor;

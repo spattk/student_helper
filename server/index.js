@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
-
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const fetch = require("node-fetch");
 
 //middleware
 app.use(cors());
@@ -11,33 +12,47 @@ app.use(express.json()); //req.body
 
 //ROUTES//
 
-app.use("/login", (req, res) => {
+app.use("/login", async (req, res) => {
   try {
-    console.log(req.body);
     const { username, password } = req.body;
-    console.log(username);
-    console.log(password);
-    const user = pool
-      .query("select * from users where username=$1 and password=$2", [
-        username,
+    const result = await pool.query("select * from users where username=$1", [
+      username,
+    ]);
+    if (
+      result != undefined &&
+      result.rows != undefined &&
+      result.rows[0] != undefined
+    ) {
+      let isValidPassword = await bcrypt.compare(
         password,
-      ])
-      .then((result) => {
-        if (result.rows[0] != undefined) {
-          console.log("in");
-          res.send({
-            token: "approved",
-          });
-        } else {
-          console.log("out");
-          res.send({
-            token: "not approved",
-          });
-        }
+        result.rows[0].password
+      );
+      if (isValidPassword) {
+        const id = result.rows[0].user_id;
+        const token = jwt.sign({ id }, "jwtSecret", {
+          expiresIn: 300,
+        });
+        // req.session.user = result;
+        res.send({
+          auth: true,
+          token: token,
+          result: result.rows[0],
+        });
+      } else {
+        res.send({
+          auth: false,
+        });
+      }
+    } else {
+      res.send({
+        auth: false,
       });
-    //  const user = myfunction(username,password).then(res=>console.log(res));
+    }
   } catch (err) {
-    console.log("some rr ");
+    console.log("some error " + err);
+    res.send({
+      auth: false,
+    });
   }
 });
 
@@ -61,10 +76,11 @@ app.get("/users/students", async (req, res) => {
   }
 });
 
-app.get("/users/students", async (req, res) => {
+
+app.get("/users/professors", async (req, res) => {
   try {
     const allStudents = await pool.query(
-      "select * from users where role='student'"
+      "select * from users where lower(role)='professor'"
     );
     res.json(allStudents.rows);
   } catch (err) {
@@ -148,6 +164,15 @@ app.get("/groups/professor/:id", async (req, res) => {
 
 app.get("/stories", async (req, res) => {
   try {
+    const authResponse = await fetch("http://localhost:5001/isUserAuth", {
+      headers: {
+        "x-access-token": req.headers["x-access-token"],
+      },
+    });
+    const authResult = await authResponse.json();
+    if (!authResult.auth) {
+      return res.status(403).json({ message: "Invalid Token" });
+    }
     const allStories = await pool.query("select * from stories");
     res.json(allStories.rows);
   } catch (err) {
@@ -242,11 +267,14 @@ app.post("/users", async (req, res) => {
       department,
     } = await req.body;
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = await pool.query(
       "INSERT INTO users (username,password,email,first_name,last_name,phone,role,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
       [
         username,
-        password,
+        hashedPassword,
         email,
         first_name,
         last_name,
@@ -454,6 +482,43 @@ app.get("/projects/:id/developers", async (req, res) => {
   } catch (err) {
     console.error(err.message);
   }
+});
+
+//TEST JWT
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    res.send({ auth: false, message: "No Token" });
+  } else {
+    jwt.verify(token, "jwtSecret", (err, decoded) => {
+      if (err) {
+        console.log(err);
+        res.send({ auth: false, message: "Invalid token" });
+      } else {
+        req.userId = decoded.id;
+        res.send({ auth: true, message: "Yo Auth" });
+        console.log(decoded.id);
+        next();
+      }
+    });
+  }
+};
+
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.send("Yo Auth");
+});
+
+app.get("/groups/members/:id", async (req,res) => {
+    try{
+        const {id} = req.params;
+        const users = await pool.query(
+            "select username as developer_name from users u where user_id  in (select user_id from studentgroupmapping s where group_id = $1)",
+            [id]
+        );
+        res.json(users.rows);
+    } catch(err) {
+        console.error(err.message);
+    }
 });
 
 app.listen(5001, () => {

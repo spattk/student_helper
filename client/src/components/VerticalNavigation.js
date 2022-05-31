@@ -7,7 +7,6 @@ export default class MenuExampleVerticalPointing extends Component {
 
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
-    console.log(e + " @@@@@@ " + name);
   };
 
   render() {
@@ -47,6 +46,15 @@ export default class MenuExampleVerticalPointing extends Component {
             <Menu.Item
               name="students"
               active={activeItem === "students"}
+              onClick={this.handleItemClick}
+              style={{color:"white", fontWeight:"bold", border: "0.5px solid #193D62"}}
+            />
+          </Link>
+          
+          <Link to="/professors">
+            <Menu.Item
+              name="professors"
+              active={activeItem === "professors"}
               onClick={this.handleItemClick}
               style={{color:"white", fontWeight:"bold", border: "0.5px solid #193D62"}}
             />

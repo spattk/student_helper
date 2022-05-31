@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Icon } from "semantic-ui-react";
-import "../App.css";
+import "../css/App.css";
 
 const StoryCard = (props) => {
   const [statusType, setStatusType] = useState([

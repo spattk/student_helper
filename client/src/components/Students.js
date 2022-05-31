@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
-  Card,
-  Container,
-  Grid,
-  Modal,
-  Header,
-  Button,
-  Form,
-  Icon,
+  Button, Card,
+  Container, Form, Grid, Header, Icon, Modal
 } from "semantic-ui-react";
-import "../App.css";
+import "../css/App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
 import Student from "./Student";
@@ -23,7 +17,6 @@ const Students = (props) => {
       const response = await fetch("http://localhost:5001/users/students");
       const jsonData = await response.json();
       setAllStudents(jsonData);
-      console.log(jsonData);
     } catch (err) {
       console.log(err);
     }

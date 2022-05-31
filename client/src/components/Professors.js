@@ -1,47 +1,42 @@
 import React, { useEffect, useState } from "react";
 import {
-  Button,
-  Card,
-  Container,
-  Form,
-  Grid,
-  Header,
-  Icon,
-  Modal,
+  Button, Card,
+  Container, Form, Grid, Header, Icon, Modal
 } from "semantic-ui-react";
 import "../css/App.css";
 import Footer from "./Footer";
 import MenuHeader from "./MenuHeader";
-import User from "./User";
+import Student from "./Student";
 import VerticalNavigation from "./VerticalNavigation";
 
-const Users = (props) => {
-  const [allUsers, setAllUsers] = useState([]);
+const Professors = (props) => {
+  const [allProfs, setAllProfs] = useState([]);
 
-  const getAllStudents = async () => {
+  const getAllProfs = async () => {
     try {
-      const response = await fetch("http://localhost:5001/users");
+      const response = await fetch("http://localhost:5001/users/professors");
       const jsonData = await response.json();
-      setAllUsers(jsonData);
-      console.log(jsonData);
+      setAllProfs(jsonData);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    getAllStudents();
+    getAllProfs();
   }, []);
 
   const [open, setOpen] = React.useState(false);
   const [formState, setFormState] = useState({
+    formId: "",
     formName: "",
     formPassword: "",
     formEmail: "",
     formFName: "",
     formLName: "",
     formPhone: "",
-    formRole: "",
+    formRole: "Professor",
+    formAuthToken: "",
     formDepartment: "",
   });
   const submit = () => {
@@ -65,7 +60,7 @@ const Users = (props) => {
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-        getAllStudents();
+        getAllProfs();
       });
     setOpen(false);
   };
@@ -97,7 +92,7 @@ const Users = (props) => {
                       color: "white",
                     }}
                   >
-                    Add User
+                    Add Professor
                   </Button>
                 }
                 onClose={() => setOpen(false)}
@@ -193,17 +188,17 @@ const Users = (props) => {
                   marginTop: "10px",
                   textAlign: "center",
                   border: "1px solid black",
-                  padding: "10px",
                   marginLeft: "10px",
+                  padding: "10px",
                   borderRadius: "10px",
                 }}
               >
-                <h2>All Users</h2>
+                <h2>Registered Professors</h2>
               </div>
               <div style={{ margin: "10px", marginBottom: "70px" }}>
                 <Card.Group>
-                  {allUsers.map((student) => (
-                    <User
+                  {allProfs.map((student) => (
+                    <Student
                       key={student.user_id}
                       name={student.first_name + " " + student.last_name}
                       username={student.username}
@@ -225,4 +220,4 @@ const Users = (props) => {
   );
 };
 
-export default Users;
+export default Professors;

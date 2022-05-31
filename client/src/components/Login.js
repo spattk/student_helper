@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Container, Form, Grid } from "semantic-ui-react";
-import "../App.css";
+import "../css/App.css";
+import "../css/Login.css";
 import Footer from "./Footer";
-import "./Login.css";
 import MenuHeader from "./MenuHeader";
 import VerticalNavigation from "./VerticalNavigation";
 
 async function loginUser(credentials) {
-  return fetch("http://localhost:5001/login", {
+  return await fetch("http://localhost:5001/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -34,13 +34,15 @@ const Login = (props) => {
       username,
       password,
     });
+    console.log("login page");
     console.log(token);
-    if (token != "approved") {
+    if (!token.auth) {
       isLogInSuccess = false;
       setErrorText("Invalid Username or Password !!!");
     } else {
       setErrorText(errorText);
       isLogInSuccess = true;
+      localStorage.setItem("authToken", token.token);
     }
     props.setToken(token);
   };
