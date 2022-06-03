@@ -2,13 +2,23 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const path = require("path")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fetch = require("node-fetch");
+const PORT = process.env.PORT || 5001;
+
+//process.env
 
 //middleware
 app.use(cors());
 app.use(express.json()); //req.body
+
+
+if(process.env.NODE_ENV === "production"){
+  //serve static content
+  express.static(path.join(__dirname, "client/build"));
+}
 
 //ROUTES//
 
@@ -521,6 +531,10 @@ app.get("/groups/members/:id", async (req,res) => {
     }
 });
 
-app.listen(5001, () => {
-  console.log("server has started on port 5001");
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
+})
+
+app.listen(PORT, () => {
+  console.log(`server has started on port ${PORT}`);
 });

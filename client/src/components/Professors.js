@@ -40,7 +40,7 @@ const Professors = (props) => {
     formDepartment: "",
   });
   const submit = () => {
-    fetch("http://localhost:5001/users", {
+    fetch("/users", {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",

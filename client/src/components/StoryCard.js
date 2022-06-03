@@ -17,7 +17,7 @@ const StoryCard = (props) => {
     let storyJsonData;
     let updatedStoryStatus = statusType[e.target.value];
 
-    fetch(`http://localhost:5001/stories/${storyId}`).then((response) =>
+    fetch(`/stories/${storyId}`).then((response) =>
       response.json().then((result) => {
         storyJsonData = result;
         const requestOptions = {
@@ -30,7 +30,7 @@ const StoryCard = (props) => {
             status: updatedStoryStatus,
           }),
         };
-        fetch(`http://localhost:5001/stories/${storyId}`, requestOptions).then(
+        fetch(`/stories/${storyId}`, requestOptions).then(
           (response) =>
             response.json().then((result) => {
               console.log(result);
@@ -49,13 +49,13 @@ const StoryCard = (props) => {
     let updatedDevName = dev[e.target.value];
     console.log("storyId in " + storyId + " " + updatedDevName);
 
-    fetch(`http://localhost:5001/developer/${updatedDevName}`).then(
+    fetch(`/developer/${updatedDevName}`).then(
       (response) =>
         response.json().then((result) => {
           developerJsonData = result;
           updatedDeveloperId = developerJsonData.developer_id;
 
-          fetch(`http://localhost:5001/stories/${storyId}`).then((response) =>
+          fetch(`/stories/${storyId}`).then((response) =>
             response.json().then((result2) => {
               storyJsonData = result2;
               console.log(storyJsonData);
@@ -70,7 +70,7 @@ const StoryCard = (props) => {
               console.log("updating dev " + storyId);
               console.log(requestOptions);
               fetch(
-                `http://localhost:5001/stories/${storyId}/developer`,
+                `/stories/${storyId}/developer`,
                 requestOptions
               ).then((response) =>
                 response.json().then((result) => {
