@@ -530,6 +530,8 @@ app.get("/groups/members/:id", async (req, res) => {
 });
 
 app.get("*", (req, res) => {
+  console.log("Inside GET");
+  console.log(path.join(__dirname, "client", "build", "index.html"));
   const index = path.join(__dirname, "client", "build", "index.html");
   res.sendFile(index);
 });
