@@ -16,7 +16,7 @@ app.use(express.json()); //req.body
 
 if (process.env.NODE_ENV === "production") {
   //serve static content
-  express.static(path.join(__dirname, "client/build"));
+  app.use('/static', express.static(path.join(__dirname, 'client/build')));
 }
 
 //ROUTES//
