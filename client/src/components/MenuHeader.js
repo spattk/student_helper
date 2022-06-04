@@ -11,7 +11,7 @@ const MenuHeader = (props) => {
   const authCheck = async () => {
     let currToken = localStorage.getItem("authToken");
     // console.log("^^^^" + currToken);
-    const response = await fetch("http://localhost:5001/isUserAuth", {
+    const response = await fetch("/isUserAuth", {
       headers: {
         "x-access-token": currToken,
       },

@@ -44,13 +44,13 @@ const Kanban = (props) => {
   const getProjectDetails = async () => {
     try {
       const projectResponse = await fetch(
-        `http://localhost:5001/projects/${id}`
+        `/projects/${id}`
       );
       const projectJsonData = await projectResponse.json();
       setProject(projectJsonData);
       let allDevelopersArray = [];
       const allDevelopersResponse = await fetch(
-        `http://localhost:5001/projects/${id}/developers`
+        `/projects/${id}/developers`
       );
       const allDevelopersResponseJson = await allDevelopersResponse.json();
       allDevelopersArray.push("update-dev");
@@ -60,7 +60,7 @@ const Kanban = (props) => {
       setAllDevelopers(allDevelopersArray);
 
       const projectStoriesResponse = await fetch(
-        `http://localhost:5001/projects/${id}/stories`
+        `/projects/${id}/stories`
       );
       const storyJsonData = await projectStoriesResponse.json();
       setProjectStories(storyJsonData);
@@ -98,7 +98,7 @@ const Kanban = (props) => {
     formDeveloper: "",
   });
   const submit = () => {
-    fetch("http://localhost:5001/stories", {
+    fetch("/stories", {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",

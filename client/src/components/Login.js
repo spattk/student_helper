@@ -7,7 +7,7 @@ import MenuHeader from "./MenuHeader";
 import VerticalNavigation from "./VerticalNavigation";
 
 async function loginUser(credentials) {
-  return await fetch("http://localhost:5001/login", {
+  return await fetch("/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const Login = (props) => {
       }),
     };
 
-    const response = await fetch("http://localhost:5001/users", requestOptions);
+    const response = await fetch("/users", requestOptions);
     const data = await response.json();
     if (data != undefined && data.user_id != undefined && data.user_id > 0) {
       setSuccessText("Registered Successfully !!!");

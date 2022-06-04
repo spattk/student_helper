@@ -32,7 +32,7 @@ const RecentProjects = (props) => {
     formProfID: "",
   });
   const submit = () => {
-    fetch("http://localhost:5001/projects", {
+    fetch("/projects", {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
