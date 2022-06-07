@@ -16,7 +16,7 @@ app.use(express.json()); //req.body
 
 if (process.env.NODE_ENV === "production") {
   //serve static content
-  express.static(path.join(__dirname, "client/build"));
+  app.use(express.static('client/build'));
 }
 
 //ROUTES//
@@ -530,6 +530,8 @@ app.get("/groups/members/:id", async (req, res) => {
 });
 
 app.get("*", (req, res) => {
+  console.log("Inside GET");
+  console.log(path.join(__dirname, "client", "build", "index.html"));
   const index = path.join(__dirname, "client", "build", "index.html");
   res.sendFile(index);
 });
