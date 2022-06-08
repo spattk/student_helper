@@ -231,7 +231,6 @@ app.get("/projects/:id/stories", async (req, res) => {
 app.post("/projects", async (req, res) => {
   try {
     const {
-      project_id,
       project_name,
       project_description,
       github_url,
@@ -242,9 +241,8 @@ app.post("/projects", async (req, res) => {
       professor_id,
     } = await req.body;
     const newProject = await pool.query(
-      "INSERT INTO projects (project_id, project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8::text,$9) RETURNING *",
+      "INSERT INTO projects (project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
       [
-        project_id,
         project_name,
         project_description,
         github_url,

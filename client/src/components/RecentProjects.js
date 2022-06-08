@@ -39,7 +39,6 @@ const RecentProjects = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        project_id: formState.formId,
         project_name: formState.formName,
         project_description: formState.formDesc,
         github_url: formState.formGitURL,
@@ -87,15 +86,6 @@ const RecentProjects = (props) => {
         <Header content="Add New Project" />
         <Modal.Content scrolling>
           <Form>
-            <Form.Field>
-              <label>ID</label>
-              <input
-                name="formId"
-                placeholder="ID"
-                value={formState.formId}
-                onChange={handleChange}
-              />
-            </Form.Field>
             <Form.Field>
               <label>Name</label>
               <input
