@@ -67,7 +67,7 @@ app.use("/login", async (req, res) => {
 
 app.get("/users", async (req, res) => {
   try {
-    const allUsers = await pool.query("select * from users");
+    const allUsers = await pool.query("select u.user_id, username, email, first_name, last_name, phone, department, ur.role from users u left join users_role ur on u.user_id = ur.user_id");
     res.json(allUsers.rows);
   } catch (err) {
     console.error(err.message);
@@ -77,7 +77,7 @@ app.get("/users", async (req, res) => {
 app.get("/users/students", async (req, res) => {
   try {
     const allStudents = await pool.query(
-      "select * from users where lower(role)='student'"
+      "select u.user_id, username, email, first_name, last_name, phone, department, ur.role from users u left join users_role ur on u.user_id = ur.user_id where lower(role)='student'"
     );
     res.json(allStudents.rows);
   } catch (err) {
@@ -88,7 +88,7 @@ app.get("/users/students", async (req, res) => {
 app.get("/users/professors", async (req, res) => {
   try {
     const allStudents = await pool.query(
-      "select * from users where lower(role)='professor'"
+      "select u.user_id, username, email, first_name, last_name, phone, department, ur.role from users u left join users_role ur on u.user_id = ur.user_id where lower(role)='professor'"
     );
     res.json(allStudents.rows);
   } catch (err) {
