@@ -32,6 +32,15 @@ const Kanban = (props) => {
     },
   ];
 
+  const [statusType, setStatusType] = useState([
+    "<status>",
+    "TODO",
+    "IN_PROGRESS",
+    "IN_REVIEW",
+    "COMPLETED",
+  ]);
+  const Status = statusType.map((Status) => Status);
+
   let { id } = useParams();
   const [project, setProject] = useState([]);
   const [projectStories, setProjectStories] = useState([]);
@@ -43,15 +52,11 @@ const Kanban = (props) => {
 
   const getProjectDetails = async () => {
     try {
-      const projectResponse = await fetch(
-        `/projects/${id}`
-      );
+      const projectResponse = await fetch(`/projects/${id}`);
       const projectJsonData = await projectResponse.json();
       setProject(projectJsonData);
       let allDevelopersArray = [];
-      const allDevelopersResponse = await fetch(
-        `/projects/${id}/developers`
-      );
+      const allDevelopersResponse = await fetch(`/projects/${id}/developers`);
       const allDevelopersResponseJson = await allDevelopersResponse.json();
       allDevelopersArray.push("update-dev");
       for (let i = 0; i < allDevelopersResponseJson.length; i++) {
@@ -59,9 +64,7 @@ const Kanban = (props) => {
       }
       setAllDevelopers(allDevelopersArray);
 
-      const projectStoriesResponse = await fetch(
-        `/projects/${id}/stories`
-      );
+      const projectStoriesResponse = await fetch(`/projects/${id}/stories`);
       const storyJsonData = await projectStoriesResponse.json();
       setProjectStories(storyJsonData);
       let temp = [];
@@ -134,7 +137,7 @@ const Kanban = (props) => {
 
   return (
     <Container fluid={true}>
-      <MenuHeader token={props.token} setToken={props.setToken}  />
+      <MenuHeader token={props.token} setToken={props.setToken} />
       <Grid>
         <Grid.Row>
           <Grid.Column width={3}>
@@ -202,12 +205,30 @@ const Kanban = (props) => {
                     </Form.Field>
                     <Form.Field>
                       <label>Status</label>
-                      <input
+                      {/* <input
                         name="formStatus"
                         placeholder="Status"
                         value={formState.formStatus}
                         onChange={handleChange}
-                      />
+                      /> */}
+                      <select
+                        style={{
+                          width: "45%",
+                          fontSize: "12px",
+                          padding: "7px",
+                          backgroundColor: props.bg_color,
+                          color: props.text_color,
+                        }}
+                        id={props.story_id}
+                        name="formStatus"
+                        onChange={(e) => handleChange(e)}
+                      >
+                        {Status.map((status, key) => (
+                          <option key={key} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
                     </Form.Field>
                     <Form.Field>
                       <label>Developer ID</label>

@@ -16,7 +16,7 @@ app.use(express.json()); //req.body
 
 if (process.env.NODE_ENV === "production") {
   //serve static content
-  app.use(express.static('client/build'));
+  app.use(express.static("client/build"));
 }
 
 //ROUTES//
@@ -67,7 +67,9 @@ app.use("/login", async (req, res) => {
 
 app.get("/users", async (req, res) => {
   try {
-    const allUsers = await pool.query("select u.user_id, username, email, first_name, last_name, phone, department, ur.role from users u left join users_role ur on u.user_id = ur.user_id");
+    const allUsers = await pool.query(
+      "select u.user_id, username, email, first_name, last_name, phone, department, ur.role from users u left join users_role ur on u.user_id = ur.user_id"
+    );
     res.json(allUsers.rows);
   } catch (err) {
     console.error(err.message);
@@ -290,11 +292,9 @@ app.post("/users", async (req, res) => {
     );
     const newUserId = newUser.rows[0].user_id;
     console.log(newUser.rows[0]);
-    const newUserRole = await pool.query("INSERT INTO users_role VALUES($1,$2) RETURNING *",
-      [
-        newUserId,
-        role
-      ]
+    const newUserRole = await pool.query(
+      "INSERT INTO users_role VALUES($1,$2) RETURNING *",
+      [newUserId, role]
     );
     res.json(newUser.rows[0]);
   } catch (err) {
