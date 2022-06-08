@@ -49,12 +49,14 @@ CREATE TABLE public.users (
     department character varying(20)
 );
 
-CREATE TABLE public.groups {
+insert into users(username, password, email, first_name, last_name, phone, role, department) values ('admin', '$2b$10$QytW/AIoKg0Adfy7NGVw9eDydqASTRwVvlvMmeUAnnuA8XyrVx3Sy', 'admin@gmail.com', 'admin', 'admin', '1234567890', 'Student',	'MCS');
+
+CREATE TABLE public.groups (
     group_id serial PRIMARY KEY,
     group_name character varying(255)
-}
+)
 
-CREATE TABLE public.grading {
+CREATE TABLE public.grading (
     grade_id serial PRIMARY KEY,
     group_id integer,
     week integer,
@@ -62,4 +64,4 @@ CREATE TABLE public.grading {
     professor_id integer,
     feedback text,
     comments text
-}
+)
