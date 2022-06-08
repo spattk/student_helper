@@ -14,7 +14,7 @@ const Students = (props) => {
 
   const getAllStudents = async () => {
     try {
-      const response = await fetch("http://localhost:5001/users/students");
+      const response = await fetch("/users/students");
       const jsonData = await response.json();
       setAllStudents(jsonData);
     } catch (err) {
