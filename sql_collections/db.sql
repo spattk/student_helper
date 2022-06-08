@@ -45,9 +45,13 @@ CREATE TABLE public.users (
     first_name text,
     last_name text,
     phone character varying(10),
-    role character varying(255),
     department character varying(20)
 );
+
+CREATE TABLE public.users_role (
+    user_id integer,
+    role character varying(255)
+)
 
 insert into users(username, password, email, first_name, last_name, phone, role, department) values ('admin', '$2b$10$QytW/AIoKg0Adfy7NGVw9eDydqASTRwVvlvMmeUAnnuA8XyrVx3Sy', 'admin@gmail.com', 'admin', 'admin', '1234567890', 'Student',	'MCS');
 

@@ -277,7 +277,7 @@ app.post("/users", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await pool.query(
-      "INSERT INTO users (username,password,email,first_name,last_name,phone,role,department) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
+      "INSERT INTO users (username,password,email,first_name,last_name,phone,department) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *",
       [
         username,
         hashedPassword,
@@ -285,8 +285,15 @@ app.post("/users", async (req, res) => {
         first_name,
         last_name,
         phone,
-        role,
         department,
+      ]
+    );
+    const newUserId = newUser.rows[0].user_id;
+    console.log(newUser.rows[0]);
+    const newUserRole = await pool.query("INSERT INTO users_role VALUES($1,$2) RETURNING *",
+      [
+        newUserId,
+        role
       ]
     );
     res.json(newUser.rows[0]);
