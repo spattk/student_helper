@@ -20,7 +20,7 @@ const Users = (props) => {
 
   const getAllStudents = async () => {
     try {
-      const response = await fetch("http://localhost:5001/users");
+      const response = await fetch("/users");
       const jsonData = await response.json();
       setAllUsers(jsonData);
       console.log(jsonData);

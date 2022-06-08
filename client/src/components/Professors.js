@@ -14,7 +14,7 @@ const Professors = (props) => {
 
   const getAllProfs = async () => {
     try {
-      const response = await fetch("http://localhost:5001/users/professors");
+      const response = await fetch("/users/professors");
       const jsonData = await response.json();
       setAllProfs(jsonData);
     } catch (err) {

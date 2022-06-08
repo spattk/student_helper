@@ -172,7 +172,7 @@ app.get("/groups/professor/:id", async (req, res) => {
 
 app.get("/stories", async (req, res) => {
   try {
-    const authResponse = await fetch("http://localhost:5001/isUserAuth", {
+    const authResponse = await fetch("/isUserAuth", {
       headers: {
         "x-access-token": req.headers["x-access-token"],
       },
