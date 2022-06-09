@@ -69,3 +69,6 @@ CREATE TABLE public.grading (
     feedback text,
     comments text
 )
+
+ALTER TABLE studentgroupmapping
+  ADD PRIMARY KEY (user_id, group_id);

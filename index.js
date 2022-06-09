@@ -230,6 +230,29 @@ app.get("/projects/:id/stories", async (req, res) => {
   }
 });
 
+app.post("/projects/:id/add_developer", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username } = await req.body;
+    const user = await pool.query("select * from users where username = $1", [
+      username,
+    ]);
+    const group = await pool.query(
+      "select group_id from groupprojectmapping where project_id = $1",
+      [id]
+    );
+    const user_id = user.rows[0].user_id;
+    const group_id = group.rows[0].group_id;
+    const updateMapping = await pool.query(
+      "INSERT INTO studentgroupmapping (user_id, group_id) values($1, $2) returning *",
+      [user_id, group_id]
+    );
+    console.log("Inserted " + updateMapping.rowCount + " devs");
+  } catch (err) {
+    console.log("err " + err);
+  }
+});
+
 app.post("/projects", async (req, res) => {
   try {
     const {
