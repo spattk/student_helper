@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Groups from "./Groups";
+import Feedbacks from "./Feedbacks";
 import Kanban from "./Kanban";
 import Profesors from "./Professors";
 import Projects from "./Projects";
@@ -43,6 +44,10 @@ const Views = (props) => {
       <Route
         path="kanban/:id"
         element={<Kanban token={props.token} setToken={props.setToken} />}
+      />
+      <Route
+        path="groups/:id/feedback"
+        element={<Feedbacks token={props.token} setToken={props.setToken} />}
       />
       {/* <Route path="login" element={<Login setToken={setToken} />} /> */}
     </Routes>

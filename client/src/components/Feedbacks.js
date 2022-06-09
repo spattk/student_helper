@@ -1,31 +1,13 @@
-import React, { useEffect, useState } from "react";
-import {
-    Card,
-    Container, Grid
-} from "semantic-ui-react";
+import React from "react";
+import { Card, Container, Grid } from "semantic-ui-react";
 import "../css/App.css";
 import Footer from "./Footer";
-import Group from "./Group";
 import MenuHeader from "./MenuHeader";
 import VerticalNavigation from "./VerticalNavigation";
+import Timeline from "react-timeline-semantic-ui";
+import Feedback from "./Feedback";
 
-const Groups = (props) => {
-  const [allGroups, setAllGroups] = useState([]);
-
-  const getAllGroups = async () => {
-    try {
-      const response = await fetch("/groups");
-      const jsonData = await response.json();
-      setAllGroups(jsonData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getAllGroups();
-  }, []);
-
+const Feedbacks = (props) => {
   return (
     <Container fluid={true}>
       <MenuHeader token={props.token} setToken={props.setToken} />
@@ -47,18 +29,10 @@ const Groups = (props) => {
                 borderRadius: "10px",
               }}
             >
-              <h2>All Groups</h2>
+              <h2>Group Feedback (WIP)</h2>
             </div>
-            <div style={{ margin: "10px", marginBottom: "70px" }}>
-              <Card.Group>
-                {allGroups.map((group) => (
-                  <Group
-                    devs={group.developers}
-                    id={group.group_id}
-                    name={group.groupName}
-                  />
-                ))}
-              </Card.Group>
+            <div style={{ margin: "10px", height:"20px"}}>
+             <Feedback style={{marginBottom: "20px"}} /> 
             </div>
           </Grid.Column>
         </Grid.Row>
@@ -69,4 +43,4 @@ const Groups = (props) => {
   );
 };
 
-export default Groups;
+export default Feedbacks;

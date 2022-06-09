@@ -120,6 +120,7 @@ const Users = (props) => {
                       <input
                         name="formPassword"
                         placeholder="Password"
+                        type="password"
                         value={formState.formPassword}
                         onChange={handleChange}
                       />

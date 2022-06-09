@@ -114,6 +114,7 @@ const Students = (props) => {
                       <label>Password</label>
                       <input
                         name="formPassword"
+                        type="password"
                         placeholder="Password"
                         value={formState.formPassword}
                         onChange={handleChange}
