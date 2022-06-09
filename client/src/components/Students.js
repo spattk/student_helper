@@ -63,6 +63,18 @@ const Students = (props) => {
         getAllStudents();
       });
     setOpen(false);
+    setFormState({
+      formId: "",
+      formName: "",
+      formPassword: "",
+      formEmail: "",
+      formFName: "",
+      formLName: "",
+      formPhone: "",
+      formRole: "Student",
+      formAuthToken: "",
+      formDepartment: "",
+    })
   };
 
   const handleChange = (e) => {

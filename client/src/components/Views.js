@@ -21,24 +21,24 @@ const Views = (props) => {
         element={<Dashboard token={props.token} setToken={props.setToken} />}
       />
       <Route
-        path="groups"
+        path="all-groups"
         element={<Groups token={props.token} setToken={props.setToken} />}
       />
 
       <Route
-        path="students"
+        path="all-students"
         element={<Students token={props.token} setToken={props.setToken} />}
       />
       <Route
-        path="professors"
+        path="all-professors"
         element={<Profesors token={props.token} setToken={props.setToken} />}
       />
       <Route
-        path="users"
+        path="all-users"
         element={<Users token={props.token} setToken={props.setToken} />}
       />
       <Route
-        path="projects"
+        path="all-projects"
         element={<Projects token={props.token} setToken={props.setToken} />}
       />
       <Route

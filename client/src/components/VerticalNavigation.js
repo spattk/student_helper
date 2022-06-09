@@ -24,7 +24,7 @@ export default class MenuExampleVerticalPointing extends Component {
             />
           </Link>
 
-          <Link to="/projects">
+          <Link to="/all-projects">
             <Menu.Item
               name="projects"
               active={activeItem === "projects"}
@@ -33,7 +33,7 @@ export default class MenuExampleVerticalPointing extends Component {
             />
           </Link>
 
-          <Link to="/groups">
+          <Link to="/all-groups">
             <Menu.Item
               name="groups"
               active={activeItem === "groups"}
@@ -42,7 +42,7 @@ export default class MenuExampleVerticalPointing extends Component {
             />
           </Link>
 
-          <Link to="/students">
+          <Link to="/all-students">
             <Menu.Item
               name="students"
               active={activeItem === "students"}
@@ -51,7 +51,7 @@ export default class MenuExampleVerticalPointing extends Component {
             />
           </Link>
           
-          <Link to="/professors">
+          <Link to="/all-professors">
             <Menu.Item
               name="professors"
               active={activeItem === "professors"}
@@ -60,7 +60,7 @@ export default class MenuExampleVerticalPointing extends Component {
             />
           </Link>
 
-          <Link to="/users">
+          <Link to="/all-users">
             <Menu.Item
               name="users"
               active={activeItem === "users"}
