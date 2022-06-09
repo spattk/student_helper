@@ -121,14 +121,14 @@ app.get("/projects/:id", async (req, res) => {
   }
 });
 
-app.get("/groups", async (req, res) => {
-  try {
-    const allGroups = await pool.query("select * from groupprojectmapping");
-    res.json(allGroups.rows);
-  } catch (err) {
-    console.error(err.message);
-  }
-});
+// app.get("/groups", async (req, res) => {
+//   try {
+//     const allGroups = await pool.query("select * from groupprojectmapping");
+//     res.json(allGroups.rows);
+//   } catch (err) {
+//     console.error(err.message);
+//   }
+// });
 
 app.get("/groups/:id", async (req, res) => {
   try {
@@ -580,6 +580,28 @@ app.get("/groups/members/:id", async (req, res) => {
   } catch (err) {
     console.error(err.message);
   }
+});
+
+app.get("/groups", async (req, res) => {
+  try {
+    let groups = await pool.query("select * from groups;");
+    groups = groups.rows;
+    let result = [];
+    for (let i = 0; i < groups.length; i++) {
+      let members = await pool.query(
+        "select username as dev from users u , studentgroupmapping s where s.group_id=$1 and s.user_id=u.user_id",
+        [groups[i].group_id]
+      );
+      console.log(members.rows);
+      result.push({
+        groupId: groups[i].group_id,
+        groupName: groups[i].group_name,
+        developers: members.rows.map((member) => member.dev),
+      });
+    }
+    console.log(result);
+    res.json(result);
+  } catch (err) {}
 });
 
 app.get("*", (req, res) => {

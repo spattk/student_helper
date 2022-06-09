@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
+import Groups from "./Groups";
 import Kanban from "./Kanban";
 import Profesors from "./Professors";
 import Projects from "./Projects";
@@ -18,6 +19,11 @@ const Views = (props) => {
         path="dashboard"
         element={<Dashboard token={props.token} setToken={props.setToken} />}
       />
+      <Route
+        path="groups"
+        element={<Groups token={props.token} setToken={props.setToken} />}
+      />
+
       <Route
         path="students"
         element={<Students token={props.token} setToken={props.setToken} />}
