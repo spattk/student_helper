@@ -4,11 +4,11 @@ import {
   Button,
   Card,
   Container,
+  Form,
   Grid,
   Header,
   Icon,
-  Modal,
-  Form,
+  Modal
 } from "semantic-ui-react";
 import "../css/App.css";
 import Footer from "./Footer";
@@ -49,6 +49,8 @@ const Kanban = (props) => {
   const [reviewStories, setReviewStories] = useState([]);
   const [releasedStories, setReleasedStories] = useState([]);
   const [allDevelopers, setAllDevelopers] = useState([]);
+
+  const AllDevs = allDevelopers.map((dev) => dev);
 
   const getProjectDetails = async () => {
     try {
@@ -113,7 +115,7 @@ const Kanban = (props) => {
         story_points: formState.formPoints,
         status: formState.formStatus,
         project_id: id,
-        developer_id: formState.formDeveloper,
+        developer_name: formState.formDeveloper,
       }),
     })
       .then((res) => res.json())
@@ -232,12 +234,30 @@ const Kanban = (props) => {
                     </Form.Field>
                     <Form.Field>
                       <label>Developer ID</label>
-                      <input
+                      {/* <input
                         name="formDeveloper"
                         placeholder="Developer ID"
                         value={formState.formDeveloper}
                         onChange={handleChange}
-                      />
+                      /> */}
+                      <select
+                        style={{
+                          width: "45%",
+                          fontSize: "12px",
+                          padding: "7px",
+                          backgroundColor: props.bg_color,
+                          color: props.text_color,
+                        }}
+                        id={props.story_id}
+                        name="formDeveloper"
+                        onChange={(e) => handleChange(e)}
+                      >
+                        {AllDevs.map((dev, key) => (
+                          <option key={key} value={dev}>
+                            {dev}
+                          </option>
+                        ))}
+                      </select>
                     </Form.Field>
                   </Form>
                 </Modal.Content>
@@ -254,7 +274,11 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>TODO</h4>
                   <Card.Group
-                    style={{ border: "1px solid grey", borderRadius: "10px" }}
+                    style={{
+                      border: "1px solid grey",
+                      borderRadius: "10px",
+                      marginBottom: "50px",
+                    }}
                   >
                     {todoStories.map((story, index) => (
                       <StoryCard
@@ -299,7 +323,11 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>IN_PROGRESS</h4>
                   <Card.Group
-                    style={{ border: "1px solid grey", borderRadius: "10px" }}
+                    style={{
+                      border: "1px solid grey",
+                      borderRadius: "10px",
+                      marginBottom: "50px",
+                    }}
                   >
                     {devStories.map((story, index) => (
                       <StoryCard
@@ -335,7 +363,11 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>IN_REVIEW</h4>
                   <Card.Group
-                    style={{ border: "1px solid grey", borderRadius: "10px" }}
+                    style={{
+                      border: "1px solid grey",
+                      borderRadius: "10px",
+                      marginBottom: "50px",
+                    }}
                   >
                     {reviewStories.map((story, index) => (
                       <StoryCard
@@ -375,7 +407,11 @@ const Kanban = (props) => {
                 <Grid.Column width={4}>
                   <h4 style={{ textAlign: "center" }}>COMPLETED</h4>
                   <Card.Group
-                    style={{ border: "1px solid grey", borderRadius: "10px" }}
+                    style={{
+                      border: "1px solid grey",
+                      borderRadius: "10px",
+                      marginBottom: "50px",
+                    }}
                   >
                     {releasedStories.map((story, index) => (
                       <StoryCard

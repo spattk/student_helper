@@ -367,8 +367,15 @@ app.post("/stories", async (req, res) => {
       story_points,
       status,
       project_id,
-      developer_id,
+      developer_name,
     } = await req.body;
+
+    const developer = await pool.query(
+      "select user_id from users where username = $1",
+      [developer_name]
+    );
+
+    const developer_id = developer.rows[0].user_id;
 
     const newStory = await pool.query(
       "INSERT INTO stories (story_name,story_description,story_points,status) VALUES($1,$2,$3,$4) RETURNING *",
