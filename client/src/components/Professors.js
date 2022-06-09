@@ -98,7 +98,7 @@ const Professors = (props) => {
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
               >
-                <Header content="Add New Student" />
+                <Header content="Add New Professor" />
                 <Modal.Content scrolling>
                   <Form>
                     <Form.Field>

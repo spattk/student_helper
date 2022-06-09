@@ -10,7 +10,6 @@ const StoryCard = (props) => {
     "IN_REVIEW",
     "COMPLETED",
   ]);
-  const [devLen, setDevLen] = useState(props.all_dev_len);
   const Status = statusType.map((Status) => Status);
   const handleStatusTypeChange = (e) => {
     let storyId = e.target.parentElement.id;

@@ -17,7 +17,24 @@ const RecentProjects = (props) => {
 
   useEffect(() => {
     getRecentProjects();
+    setAllProfessors();
   }, []);
+
+  const [profs, setProfs] = useState([]);
+  const Profs = profs.map((prof) => prof);
+
+  const setAllProfessors = async () => {
+    try {
+      const response = await fetch(`/users/professors`);
+      const profs = await response.json();
+      console.log(profs);
+      let allProfs = ["select-prof"];
+      profs.forEach((prof) => allProfs.push(prof.username));
+      setProfs(allProfs);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const [open, setOpen] = React.useState(false);
   const [formState, setFormState] = useState({
@@ -30,6 +47,7 @@ const RecentProjects = (props) => {
     formStatus: "",
     formDomain: "",
     formProfID: "",
+    formGroup: "",
   });
   const submit = () => {
     fetch("/projects", {
@@ -46,7 +64,8 @@ const RecentProjects = (props) => {
         funding_url: formState.formFundingURL,
         project_status: formState.formStatus,
         domain: formState.formDomain,
-        professor_id: formState.formProfID,
+        professor_username: formState.formProfID,
+        group_name: formState.formGroup
       }),
     })
       .then((res) => res.json())
@@ -150,11 +169,38 @@ const RecentProjects = (props) => {
               />
             </Form.Field>
             <Form.Field>
-              <label>Professor ID</label>
-              <input
+              <label>Professor Username</label>
+              {/* <input
                 name="formProfID"
                 placeholder="Professor ID"
                 value={formState.formProfID}
+                onChange={handleChange}
+              /> */}
+              <select
+                style={{
+                  width: "45%",
+                  fontSize: "12px",
+                  padding: "7px",
+                  backgroundColor: props.bg_color,
+                  color: props.text_color,
+                }}
+                id={props.story_id}
+                name="formProfID"
+                onChange={(e) => handleChange(e)}
+              >
+                {Profs.map((prof, key) => (
+                  <option key={key} value={prof}>
+                    {prof}
+                  </option>
+                ))}
+              </select>
+            </Form.Field>
+            <Form.Field>
+              <label>Group Name</label>
+              <input
+                name="formGroup"
+                placeholder="GroupName"
+                value={formState.formGroup}
                 onChange={handleChange}
               />
             </Form.Field>

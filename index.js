@@ -263,8 +263,15 @@ app.post("/projects", async (req, res) => {
       funding_url,
       project_status,
       domain,
-      professor_id,
+      professor_username,
+      group_name,
     } = await req.body;
+
+    const professor = await pool.query(
+      "select user_id from users where username = $1",
+      [professor_username]
+    );
+    const professor_id = professor.rows[0].user_id;
     const newProject = await pool.query(
       "INSERT INTO projects (project_name,project_description,github_url,video_url,funding_url,status,domain,professor_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
       [
@@ -278,6 +285,17 @@ app.post("/projects", async (req, res) => {
         professor_id,
       ]
     );
+
+    const newGroup = await pool.query(
+      "INSERT INTO groups(group_name) values($1) returning *",
+      [group_name]
+    );
+
+    const groupProject = await pool.query(
+      "INSERT INTO groupprojectmapping(group_id, project_id) values($1, $2) returning *",
+      [newGroup.rows[0].group_id, newProject.rows[0].project_id]
+    );
+    console.log(groupProject.rows[0]);
 
     res.json(newProject.rows[0]);
   } catch (err) {
