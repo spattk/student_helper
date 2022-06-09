@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Button,
-  Card,
-  Item,
-  Container,
-  Form,
-  Grid,
-  Header,
-  Icon,
-  Modal,
+  Button, Form, Header,
+  Icon, Item, Modal
 } from "semantic-ui-react";
 
 const Project = (props) => {
@@ -83,7 +76,7 @@ const Project = (props) => {
 
       <Item.Content style={{ color: "#193D62" }}>
         <Item.Header as="a">{props.name}</Item.Header>
-        <Item.Meta>Project Metadata</Item.Meta>
+        <Item.Meta>Group Name: {props.group}</Item.Meta>
         <Item.Description>{props.description}</Item.Description>
 
         <Item.Extra>

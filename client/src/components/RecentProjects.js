@@ -45,7 +45,7 @@ const RecentProjects = (props) => {
     formVideoURL: "<default video url>",
     formFundingURL: "<default funding url>",
     formStatus: "COMPLETED",
-    formDomain: "<defaut domain>",
+    formDomain: "<default domain>",
     formProfID: "",
     formGroup: "",
   });
@@ -65,7 +65,7 @@ const RecentProjects = (props) => {
         project_status: formState.formStatus,
         domain: formState.formDomain,
         professor_username: formState.formProfID,
-        group_name: formState.formGroup
+        group_name: formState.formGroup,
       }),
     })
       .then((res) => res.json())
@@ -233,6 +233,7 @@ const RecentProjects = (props) => {
             <Project
               key={recentProject.project_id}
               name={recentProject.project_name}
+              group={recentProject.group_name}
               description={recentProject.project_description}
               project_id={recentProject.project_id}
             />

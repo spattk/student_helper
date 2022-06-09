@@ -29,12 +29,11 @@ const StoryCard = (props) => {
             status: updatedStoryStatus,
           }),
         };
-        fetch(`/stories/${storyId}`, requestOptions).then(
-          (response) =>
-            response.json().then((result) => {
-              console.log(result);
-              props.update_story_handler();
-            })
+        fetch(`/stories/${storyId}`, requestOptions).then((response) =>
+          response.json().then((result) => {
+            console.log(result);
+            props.update_story_handler();
+          })
         );
       })
     );
@@ -48,38 +47,35 @@ const StoryCard = (props) => {
     let updatedDevName = dev[e.target.value];
     console.log("storyId in " + storyId + " " + updatedDevName);
 
-    fetch(`/developer/${updatedDevName}`).then(
-      (response) =>
-        response.json().then((result) => {
-          developerJsonData = result;
-          updatedDeveloperId = developerJsonData.developer_id;
+    fetch(`/developer/${updatedDevName}`).then((response) =>
+      response.json().then((result) => {
+        developerJsonData = result;
+        updatedDeveloperId = developerJsonData.developer_id;
 
-          fetch(`/stories/${storyId}`).then((response) =>
-            response.json().then((result2) => {
-              storyJsonData = result2;
-              console.log(storyJsonData);
-              const requestOptions = {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  developer_id: updatedDeveloperId,
-                  project_id: storyJsonData.project_id,
-                }),
-              };
-              console.log("updating dev " + storyId);
-              console.log(requestOptions);
-              fetch(
-                `/stories/${storyId}/developer`,
-                requestOptions
-              ).then((response) =>
+        fetch(`/stories/${storyId}`).then((response) =>
+          response.json().then((result2) => {
+            storyJsonData = result2;
+            console.log(storyJsonData);
+            const requestOptions = {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                developer_id: updatedDeveloperId,
+                project_id: storyJsonData.project_id,
+              }),
+            };
+            console.log("updating dev " + storyId);
+            console.log(requestOptions);
+            fetch(`/stories/${storyId}/developer`, requestOptions).then(
+              (response) =>
                 response.json().then((result) => {
                   console.log(result);
                   props.update_story_handler();
                 })
-              );
-            })
-          );
-        })
+            );
+          })
+        );
+      })
     );
   };
 

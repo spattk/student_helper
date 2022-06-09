@@ -29,7 +29,7 @@ const Feedbacks = (props) => {
                 borderRadius: "10px",
               }}
             >
-              <h2>Group Feedback (WIP)</h2>
+              <h2>Group Feedback</h2>
             </div>
             <div style={{ margin: "10px", height:"20px"}}>
              <Feedback style={{marginBottom: "20px"}} /> 

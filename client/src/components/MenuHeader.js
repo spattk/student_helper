@@ -20,13 +20,9 @@ const MenuHeader = (props) => {
     console.log(res);
   };
 
-  const groupFeedback = async () => {
-    window.location.href = "/groups/1/feedback";
-  };
-
   const redirectToHome = async () => {
     window.location.href = "/dashboard";
-  }
+  };
 
   return (
     <div>
@@ -45,11 +41,6 @@ const MenuHeader = (props) => {
             name="test auth"
             style={{ color: "white", fontWeight: "bold" }}
             onClick={authCheck}
-          />
-          <Menu.Item
-            name="Group Feedback"
-            style={{ color: "white", fontWeight: "bold" }}
-            onClick={groupFeedback}
           />
 
           <Menu.Menu position="right">
