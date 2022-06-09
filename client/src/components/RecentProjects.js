@@ -47,7 +47,6 @@ const RecentProjects = (props) => {
     formStatus: "COMPLETED",
     formDomain: "<default domain>",
     formProfID: "",
-    formGroup: "",
   });
   const submit = () => {
     fetch("/projects", {
@@ -233,7 +232,6 @@ const RecentProjects = (props) => {
             <Project
               key={recentProject.project_id}
               name={recentProject.project_name}
-              group={recentProject.group_name}
               description={recentProject.project_description}
               project_id={recentProject.project_id}
             />

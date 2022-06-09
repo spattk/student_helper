@@ -101,8 +101,11 @@ app.get("/users/professors", async (req, res) => {
 app.get("/projects", async (req, res) => {
   try {
     const allProjects = await pool.query(
-      "select projects.project_id, project_name, project_description, github_url, video_url, funding_url, status, domain, professor_id, group_name from projects,groups,groupprojectmapping pm where projects.project_id = groups.group_id and projects.project_id = pm.project_id"
+      "select * from projects;"
     );
+    // const allProjects = await pool.query(
+    //   "select projects.project_id, project_name, project_description, github_url, video_url, funding_url, status, domain, professor_id, group_name from projects,groups,groupprojectmapping pm where projects.project_id = groups.group_id and projects.project_id = pm.project_id"
+    // );
     res.json(allProjects.rows);
   } catch (err) {
     console.error(err.message);

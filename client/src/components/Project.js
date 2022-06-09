@@ -76,7 +76,7 @@ const Project = (props) => {
 
       <Item.Content style={{ color: "#193D62" }}>
         <Item.Header as="a">{props.name}</Item.Header>
-        <Item.Meta>Group Name: {props.group}</Item.Meta>
+        <Item.Meta>Project Metadata</Item.Meta>
         <Item.Description>{props.description}</Item.Description>
 
         <Item.Extra>
